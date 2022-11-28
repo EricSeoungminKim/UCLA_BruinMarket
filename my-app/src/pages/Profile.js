@@ -1,6 +1,5 @@
-import React, {Component} from "react";
+import React, {useState, Component} from "react";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import {StyleSheet, View, Text, Image} from "react-native";
 
 var name="FIRST LAST"
@@ -83,7 +82,6 @@ class RateUser extends Component{
     )
   }
 }
-
 
 class Product extends Component{
   //fits 3 product cards per row on screen
@@ -177,8 +175,6 @@ class Profile extends Component {
         <Product></Product>
         <Product></Product>
       </View>
-
-      <Footer />
     </React.Fragment>
   )
   }

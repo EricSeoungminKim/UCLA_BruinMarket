@@ -43,55 +43,35 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="navbarMenu">
-        {/* <div>
-          <NavLink to="/aboutus" className="linkmenuItem">
-            About Us
+        <NavLink to="/" className="linkmenuItem">
+          Home
+        </NavLink>
+        <NavLink to="/aboutus" className="linkmenuItem">
+          About Us
+        </NavLink>
+
+        {status ? (
+          <div className="dropDownMenu">
+            <Dropdown title="Buy/Sell">
+              <Dropdown.Item as={Link} to="/myprofile"> My Profile </Dropdown.Item>
+              <Dropdown.Item as={Link} to="/createpost">Create a Post</Dropdown.Item>
+              <Dropdown.Item as={Link} to="/timeline"> Timeline </Dropdown.Item>
+            </Dropdown>
+          </div>
+        ) : (
+          ""
+        )}
+
+        {status ? (
+          <span className="linkmenuItem" onClick={logout}>
+            Log out
+          </span>
+        ) : (
+          <NavLink to="/loginsignup" className="linkmenuItem">
+            Login / Sign Up
           </NavLink>
-        </div> */}
-        <div className="dropDownMenu">
-          <Dropdown title="ABOUT THIS PROJECT">
-            <Dropdown.Menu title="How did we made?">
-              <Dropdown.Item>Overall Structure</Dropdown.Item>
-            </Dropdown.Menu>
-            <Dropdown.Menu title="About US">
-              <Dropdown.Item>Kelly Yu</Dropdown.Item>
-              <Dropdown.Item>Seoungmin Kim</Dropdown.Item>
-              <Dropdown.Item>emily Nham</Dropdown.Item>
-              <Dropdown.Item>Lana Lim</Dropdown.Item>
-              <Dropdown.Item>John Hsu</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
+        )}
 
-        <div className="dropDownMenu">
-          <Dropdown title="BRUIN MARKET">
-            <Dropdown.Item>Rent</Dropdown.Item>
-            <Dropdown.Item>Buy / Sell</Dropdown.Item>
-            <Dropdown.Item>Trade</Dropdown.Item>
-          </Dropdown>
-        </div>
-
-        <div>
-          {status ? (
-            <NavLink to="/myprofile" className="linkmenuItem">
-              My Profile
-            </NavLink>
-          ) : (
-            <NavLink to="/loginsignup" className="linkmenuItem">
-              Login / Sign Up
-            </NavLink>
-          )}
-        </div>
-
-        <div>
-          {status ? (
-            <span className="linkmenuItem" onClick={logout}>
-              Log out
-            </span>
-          ) : (
-            ""
-          )}
-        </div>
       </div>
     </nav>
   );

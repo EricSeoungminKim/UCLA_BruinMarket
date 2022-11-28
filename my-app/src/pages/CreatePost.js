@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 
-function AboutUs() {
+function CreatePost() {
   return (
     <React.Fragment>
       <Navbar />
@@ -10,4 +10,4 @@ function AboutUs() {
   );
 }
 
-export default AboutUs;
+export default CreatePost;
