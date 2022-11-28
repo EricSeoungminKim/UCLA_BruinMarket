@@ -16,14 +16,20 @@ var price = 19.00
 price = price.toFixed(2)
 var description = "Chair to sit in."
 
-//need to render new data after user shares their rating
-//each user should only get one rating
+//backend:
+  //render new data after user shares their rating --> update # stars filled based on new avg rating
+  //each user gets one rating --> overwrite their old rating with new rating
+
+//user clicks on button to confirm new rating: RateUsers class
+  //update backend data
+  //compute new overall rating
+  //use backend data to determine number of stars filled to display
+
+//displaying stars: setUpStars()
+  //for loop: compare star's index to overall rating to determine which stars are filled/empty
 
 function setUpStars(newRate){
-  //user clicks on star, confirms rating --> send data to backend, display rating --> using backend data
-  //if not hovering, display rating --> using backend data
-    //do so using for loop comparing index to overall rating to determine if next star should be filled
-  
+
   let stars=[]
   var i=1;
 
@@ -36,33 +42,23 @@ function setUpStars(newRate){
   }
 
   return(
-    <View style={{alignSelf: 'center'}}>
-      <Text style={{marginLeft: 20, fontSize: 15, fontWeight: 500}}> User's Rating: </Text>
-      <View style={{flexDirection: 'row'}}>
-        {stars}
-      </View>
+    <View>
+      <Text style={{alignSelf: 'center', marginLeft: 20, fontSize: 15, fontWeight: 500}}> User's Current Rating: </Text>
+      <View style={{alignSelf: 'center', flexDirection: 'row'}}> {stars} </View>
     </View>
   )
 }
-
-
-class Star extends Component{
-
-    render(){
-      return
-    }
-    onClickStar(newRating){
-      this.state.rating = newRating
-    }
-
-}
-
+ 
 class RateUser extends Component{
   constructor (props){
     super(props)
     this.state = {
       rating: 5
     };
+  }
+
+  onClickHandler (value){
+    this.setState({rating: value});
   }
   
   render(){
@@ -76,13 +72,11 @@ class RateUser extends Component{
         </View>
 
         <View style={{alignSelf: 'center', flexDirection: 'row'}}>
-          <button style={styles.dot} onClick={this.state.rating = 1}> 1 </button>
-          <button style={styles.dot} onClick={this.state.rating = 2}> 2 </button>
-          <button style={styles.dot} onClick={this.state.rating = 3}> 3 </button>
-          <button style={styles.dot} onClick={setUpStars(4)}> 4 </button>
-          <button style={styles.dot} onClick={setUpStars(5)}> 5 </button>
-
-          <Text> {this.state.rating} </Text>
+          <button style={styles.dot} onClick={() => this.onClickHandler(1)}> 1 </button>
+          <button style={styles.dot} onClick={() => this.onClickHandler(2)}> 2 </button>
+          <button style={styles.dot} onClick={() => this.onClickHandler(3)}> 3 </button>
+          <button style={styles.dot} onClick={() => this.onClickHandler(4)}> 4 </button>
+          <button style={styles.dot} onClick={() => this.onClickHandler(5)}> 5 </button>
         </View>
         
       </View>
