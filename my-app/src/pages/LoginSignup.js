@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import Auth from "../components/Auth";
 
 function LoginSignup({ userRepository }) {
@@ -27,7 +26,6 @@ function LoginSignup({ userRepository }) {
       <Navbar />
 
       <Auth onAdd={createUser} deleteUser={deleteUser} />
-      <Footer />
     </React.Fragment>
   );
 }

@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import {StyleSheet, View, Text, Image} from "react-native";
 // import "./Profile.css"
 
@@ -94,9 +93,7 @@ function Profile() {
         <Product></Product>
         <Product></Product>
       </View>
-
-
-      <Footer />
+      
     </React.Fragment>
   );
 }
