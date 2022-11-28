@@ -1,25 +1,97 @@
-import React, {Component} from "react";
+import React, {useState, Component} from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import {StyleSheet, View, Text, Image} from "react-native";
-// import "./Profile.css"
 
 var name="FIRST LAST"
 var year = "2024"
 var major = "Computer Science"
 var intro = "Hello, I like to sell things. Like a lot of things that can be sold. I sell things that sell to be sold. Selling things is very fun to me."
-var rating = "5/5"
 
 var title = "Chair"
 var postDate = "11/27/22"
 var updateDate = "11/27/22"
-var status = "For Sale" //sale, trade, rent
+var status = "For Sale" //sale, trade, rent //sold, traded, rented
 var price = 19.00
 price = price.toFixed(2)
 var description = "Chair to sit in."
 
-class Product extends Component{
+//need to render new data after user shares their rating
+//each user should only get one rating
 
+function setUpStars(newRate){
+  //user clicks on star, confirms rating --> send data to backend, display rating --> using backend data
+  //if not hovering, display rating --> using backend data
+    //do so using for loop comparing index to overall rating to determine if next star should be filled
+  
+  let stars=[]
+  var i=1;
+
+  for(; i<=newRate; i++){
+    stars[i] =  <Image style={styles.stars} source={require('../images/filled.png')} />
+  }
+
+  for(; i<=5; i++){
+    stars[i] =  <Image style={styles.stars} source={require('../images/empty.png')} />
+  }
+
+  return(
+    <View style={{alignSelf: 'center'}}>
+      <Text style={{marginLeft: 20, fontSize: 15, fontWeight: 500}}> User's Rating: </Text>
+      <View style={{flexDirection: 'row'}}>
+        {stars}
+      </View>
+    </View>
+  )
+}
+
+
+class Star extends Component{
+
+    render(){
+      return
+    }
+    onClickStar(newRating){
+      this.state.rating = newRating
+    }
+
+}
+
+class RateUser extends Component{
+  constructor (props){
+    super(props)
+    this.state = {
+      rating: 5
+    };
+  }
+  
+  render(){
+    return (
+      <View>
+        <View> {setUpStars(this.state.rating)} </View>
+        <Text> </Text>
+
+        <View style={{alignSelf: 'center'}}>
+          <Text style={{fontWeight: 500}}> Select your rating: </Text>
+        </View>
+
+        <View style={{alignSelf: 'center', flexDirection: 'row'}}>
+          <button style={styles.dot} onClick={this.state.rating = 1}> 1 </button>
+          <button style={styles.dot} onClick={this.state.rating = 2}> 2 </button>
+          <button style={styles.dot} onClick={this.state.rating = 3}> 3 </button>
+          <button style={styles.dot} onClick={setUpStars(4)}> 4 </button>
+          <button style={styles.dot} onClick={setUpStars(5)}> 5 </button>
+
+          <Text> {this.state.rating} </Text>
+        </View>
+        
+      </View>
+    )
+  }
+}
+
+
+class Product extends Component{
   //fits 3 product cards per row on screen
   render(){
     return(
@@ -43,15 +115,17 @@ class Product extends Component{
 }
 
 
-function Profile() {
-  return (
+class Profile extends Component {
+  render(){
+    return (
     <React.Fragment>
       <Navbar /> 
       
       <View style={{flexDirection: 'row'}}>
           <View style={{flex:1}}>
             <Image style={{width: 300, height: 300, alignSelf: 'center'}} source={require('../images/user-image.png')} />
-            <Text style={{alignSelf: 'center'}}> User Rating: {rating} </Text>
+            <RateUser/>
+            
           </View>
           
           <View style={{flex:3}}>
@@ -75,14 +149,6 @@ function Profile() {
         <Text style={styles.name}> Products: </Text>
       </View>
 
-      <View>
-      <View style={{padding: 50}}>    
-        <View style={{alignSelf: 'center' , padding: 10, width: 350, height: 475, borderWidth: 2, borderColor: '#019FAF'}}>
-          <Text> Add new item </Text>
-        </View>
-      </View>
-      </View>
-
       <View style={{flexDirection: 'row', alignSelf: 'center'}}> 
         <Product title={title} postDate={postDate} updateDate={updateDate} status={status} price={price} description={description}></Product>
         <Product></Product>
@@ -98,13 +164,20 @@ function Profile() {
 
       <Footer />
     </React.Fragment>
-  );
+  )
+  }
 }
 
-//<Text className="name"> First  Middle  (opt) Last Name</Text>
-//<Text className="more-info"> Year: </Text>
-//<Text className="more-info"> Major: </Text>
-//<Text className="more-info"> Introduction: </Text>
+
+/* ADD NEW ITEM
+  <View>
+      <View style={{padding: 50}}>    
+        <View style={{alignSelf: 'center' , padding: 10, width: 350, height: 475, borderWidth: 2, borderColor: '#019FAF'}}>
+          <Text> Add new item </Text>
+        </View>
+      </View>
+      </View>
+*/
 
 const styles=StyleSheet.create({
 
@@ -120,6 +193,23 @@ const styles=StyleSheet.create({
       fontWeight: 500,
       marginLeft: 20,
       padding: 10,
+    },
+
+    stars:{
+      width: 30,
+      height: 30,
+      padding: 2,
+    },
+
+    dot:{
+      width: 30,
+      height: 30,
+      borderRadius: 15,
+      backgroundColor: "white",
+      borderColor: "black",
+      borderWidth: 2,
+      alignSelf: 'center',
+      padding: 5,
     },
 
 })
