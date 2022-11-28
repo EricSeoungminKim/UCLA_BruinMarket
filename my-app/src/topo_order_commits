@@ -1,0 +1,107 @@
+import os
+import sys
+import zlib
+import copy
+from collections import deque
+
+class CommitNode:
+    def __init__(self, commit_hash):
+        """
+        :type commit_hash: str
+        """
+        self.commit_hash = commit_hash
+        self.parents = set()
+        self.children = set()
+
+#Get git directory
+def get_git_path(path):
+    while (path != os.path.dirname(path)):
+        if (os.path.isdir("%s/.git" % path)):
+            return os.path.join(path, ".git")
+        else:
+            path = os.path.dirname(path)
+
+    sys.exit("Not inside a Git repository\n")
+
+#Drawing a Graph    
+def graphing():
+  b = get_branch_name()
+  graph = {}
+
+  for commit in sorted(b.values()):
+    git_dir = get_git_path()
+    directory = os.path.join(git_dir, "objects", commit[:2], commit[2:])
+
+    commits = zlib.decompress(open(directory, "rb").read())
+    commit_checker = commits[:6] == b"commit:"
+
+    if commit_checker:
+      c = [commit]
+      while(c != []):
+        commit = c.pop()
+        if commit in graph:
+          ptr = graph[commit]
+        else:
+          ptr = CommitNode(commit) 
+          
+        parent = get_dir_parents(commit)
+        for p in sorted(parent):
+          ptr.parent.add(p)
+
+          if p in graph:
+            p_ptr = graph[p]
+          else:
+            p_ptr = CommitNode(p)
+            c.append(p)
+
+          p_ptr.children.add(commit)
+          graph[p] = p_ptr
+
+        graph[commit] = ptr
+  return graph
+
+#Get parent commit info
+def get_dir_parents(commit):
+  parent_dir = []
+  git_dir = get_git_path()
+  directory = os.path.join(git_dir, "objects", commit[:2], commit[2:])
+
+  commits = zlib.decompress(open(directory, "rb").read())
+  commit_checker = commits[:6] == b"commit:"
+  
+  if commit_checker:
+     commits = commits.decode().split("\n")
+     for commit in sorted(commits):
+       which_commit, message = commit[:6], commit[7:]
+       if(which_commit == "parent"):
+         parent_dir.append(message)
+
+  return parent_dir
+
+#Get list of local branch names
+def get_branch_name(): 
+  branches = []
+  branch_return = {}
+  directory_git = get_git_path(os.getcwd())
+  branch_list = os.path.join(directory_git, "refs", "heads")
+
+  for i, dirs, files in os.walk(branch_list):
+    for file in files:
+      root = os.path.join(i, file)
+      branches.append(root[len(branch_list) + 1:])
+  for branch in branches:
+    root = os.path.join(branch_list, branch)
+    name_of_branch = open(root, "r").read().replace("\n", "")
+    branch_return[branches]=name_of_branch
+
+  return branch_return
+  
+#Failed on building this
+def print_topo_order_commits(): 
+  return graphing()
+#Failed on building this
+def topo_order_commits():
+  return print_topo_order_commits()
+
+if __name__ == "__main__":
+    topo_order_commits()
