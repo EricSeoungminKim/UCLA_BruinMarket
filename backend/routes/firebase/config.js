@@ -13,7 +13,7 @@ const firebaseConfig = {
   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
   projectId: process.env.REACT_APP_PROJECT_ID,
   databaseURL: process.env.REACT_APP_FIREBASE_DB_URL,
-  // storageBucket: "ucla-hanin.appspot.com",
+  // storageBucket: "uclabruinmarket.appspot.com",
   // messagingSenderId: "56072914377",
   // appId: "1:56072914377:web:da014c7492d60689765418",
   // measurementId: "G-2FJ8MG472T",
