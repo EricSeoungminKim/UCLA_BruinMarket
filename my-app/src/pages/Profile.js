@@ -14,7 +14,7 @@ var updateDate = "11/27/22"
 var status = "For Sale" //sale, trade, rent //sold, traded, rented
 var price = 19.00
 price = price.toFixed(2)
-var description = "Chair to sit in."
+var description = "Chair to sit in." 
 
 //backend:
   //render new data after user shares their rating --> update # stars filled based on new avg rating
