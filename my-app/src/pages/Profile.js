@@ -67,7 +67,7 @@ class RateUser extends Component{
         <Text> </Text>
 
         <View style={{alignSelf: 'center'}}>
-          <Text style={{fontWeight: 500}}> Select your rating: </Text>
+          <Text style={{fontSize: 15, fontWeight: 500}}> Select your rating: </Text>
         </View>
 
         <View style={{alignSelf: 'center', flexDirection: 'row'}}>
@@ -83,24 +83,46 @@ class RateUser extends Component{
   }
 }
 
-
 class Product extends Component{
   //fits 3 product cards per row on screen
   render(){
     return(
       <View style={{padding: 50}}>    
         <View style={{padding: 10, width: 350, borderWidth: 2, borderColor: '#019FAF'}}>
-          <Text> Title: {this.props.title} </Text>
-          <Text> Date Posted: {this.props.postDate} </Text>
-          <Text> Last Updated: {this.props.updateDate} </Text>
+          <View style={{flexDirection: 'row'}}>
+              <Text style={{fontWeight: 800}}> Title: </Text>
+              <Text>{this.props.title} </Text>
+          </View>
+
+          <View style={{flexDirection: 'row'}}>
+            <Text style={{fontWeight: 800}}> Date Posted: </Text>
+            <Text>{this.props.postDate} </Text>
+          </View>
+          
+          <View style={{flexDirection: 'row'}}>
+            <Text style={{fontWeight: 800}}> Last Updated: </Text>
+            <Text>{this.props.updateDate} </Text>
+          </View>
 
           <Text>    </Text>
           <Image style={{alignSelf: 'center', width: 300, height: 300}} source={require('../images/chair.jpg')} />
           <Text>    </Text>
 
-          <Text> Status: {this.props.status} </Text>
-          <Text> Price: ${this.props.price} </Text> 
-          <Text> Description: {this.props.description} </Text>
+          <View style={{flexDirection: 'row'}}>
+            <Text style={{fontWeight: 800}}> Status: </Text>
+            <Text>{this.props.status}</Text>
+          </View>
+
+          <View style={{flexDirection: 'row'}}>
+            <Text style={{fontWeight: 800}}> Price: </Text>
+            <Text>${this.props.price} </Text> 
+          </View>
+
+          <View style={{flexDirection: 'row'}}>
+            <Text style={{fontWeight: 800}}> Description: </Text>
+            <Text>{this.props.description} </Text>
+          </View>
+
         </View>
       </View>
     )
@@ -153,7 +175,6 @@ class Profile extends Component {
         <Product></Product>
         <Product></Product>
       </View>
-      
     </React.Fragment>
   )
   }
