@@ -1,21 +1,47 @@
-import React from "react";
+import React, {Component} from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import {StyleSheet, View, Text, Image} from "react-native";
 // import "./Profile.css"
 
-const name="FIRST LAST"
-const year = "2024"
-const major = "Computer Science"
-const intro = "Hello, I like to sell things. Like a lot of things that can be sold. I sell things that sell to be sold. Selling things is very fun to me."
-const rating = "5/5"
+var name="FIRST LAST"
+var year = "2024"
+var major = "Computer Science"
+var intro = "Hello, I like to sell things. Like a lot of things that can be sold. I sell things that sell to be sold. Selling things is very fun to me."
+var rating = "5/5"
 
-const title = "Chair"
-const postDate = "11/27/22"
-const updateDate = "11/27/22"
-const status = "For Sale" //sale, trade, rent
-const price = 19.00
-const description = "Chair to sit in."
+var title = "Chair"
+var postDate = "11/27/22"
+var updateDate = "11/27/22"
+var status = "For Sale" //sale, trade, rent
+var price = 19.00
+price = price.toFixed(2)
+var description = "Chair to sit in."
+
+class Product extends Component{
+
+  //fits 3 product cards per row on screen
+  render(){
+    return(
+      <View style={{padding: 50}}>    
+        <View style={{padding: 10, width: 350, borderWidth: 2, borderColor: '#019FAF'}}>
+          <Text> Title: {this.props.title} </Text>
+          <Text> Date Posted: {this.props.postDate} </Text>
+          <Text> Last Updated: {this.props.updateDate} </Text>
+
+          <Text>    </Text>
+          <Image style={{alignSelf: 'center', width: 300, height: 300}} source={require('../images/chair.jpg')} />
+          <Text>    </Text>
+
+          <Text> Status: {this.props.status} </Text>
+          <Text> Price: ${this.props.price} </Text> 
+          <Text> Description: {this.props.description} </Text>
+        </View>
+      </View>
+    )
+  }
+}
+
 
 function Profile() {
   return (
@@ -49,20 +75,26 @@ function Profile() {
         <Text style={styles.name}> Products: </Text>
       </View>
 
-      <View style={{marginLeft: 20, width: 350, padding: 20, borderWidth: 2, borderColor: "purple", flexShrink: 1}}>
-        <Text> Title: {title} </Text>
-        <Text> Date Posted: {postDate} </Text>
-        <Text> Last Updated: {updateDate} </Text>
-
-        <Text>    </Text>
-        <Image style={{width: 300, height: 300}} source={require('../images/chair.jpg')} />
-        <Text>    </Text>
-
-        <Text> Status: {status} </Text>
-        <Text> Price: ${price} </Text> 
-        <Text> Description: {description} </Text>
-
+      <View>
+      <View style={{padding: 50}}>    
+        <View style={{alignSelf: 'center' , padding: 10, width: 350, height: 475, borderWidth: 2, borderColor: '#019FAF'}}>
+          <Text> Add new item </Text>
+        </View>
       </View>
+      </View>
+
+      <View style={{flexDirection: 'row', alignSelf: 'center'}}> 
+        <Product title={title} postDate={postDate} updateDate={updateDate} status={status} price={price} description={description}></Product>
+        <Product></Product>
+        <Product></Product>
+      </View>
+
+      <View style={{flexDirection: 'row', alignSelf: 'center'}}> 
+        <Product></Product>
+        <Product></Product>
+        <Product></Product>
+      </View>
+
 
       <Footer />
     </React.Fragment>
@@ -89,7 +121,6 @@ const styles=StyleSheet.create({
       marginLeft: 20,
       padding: 10,
     },
-
 
 })
 
