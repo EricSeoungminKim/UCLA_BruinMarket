@@ -52,6 +52,7 @@ function CreatePost() {
                             defaultValue={0}
                             decimalsLimit={2}
                             decimalScale={2}
+                            prefix={'$'}
                             onValueChange={(value, name) => setValue(value)}
                         />
                     </div>

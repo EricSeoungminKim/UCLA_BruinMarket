@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getDocs, collection, deleteDoc, doc } from "firebase/firestore";
+import { getDocs, collection, query, orderBy } from "firebase/firestore";
 import { db } from "../service/firebase";
 import Navbar from "../components/Navbar";
 
@@ -8,7 +8,7 @@ function Timeline() {
     const postsCollectionRef = collection(db, "posts");
     useEffect(() => {
         const getPosts = async () => {
-          const data = await getDocs(postsCollectionRef);
+          const data = await getDocs(query(postsCollectionRef, orderBy('date', 'asc')));
           setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
         };
     
