@@ -15,7 +15,7 @@ class AboutUs extends Component {
             <Text style = {styles.subtitle}>Rules & Privacy</Text>
                 <Text style = {styles.paragraph}>Keep in mind that the posts and comments made by users are open to the public. Please be respectful, appropriate, and most importantly, do not share your private information on this website.</Text>
             <Text style = {styles.subtitle}>Creators</Text>
-              <Text style = {styles.paragraph}>John Hsu, Seoungmin (Eric) Kim, Lana Lim, Emily Nham, Kelly Yu</Text>
+              <Text style = {styles.paragraph}> Lana Lim, Kelly Yu, Emily Nham, Seoungmin (Eric) Kim, John Hsu </Text>
         </View>
       </React.Fragment>
     );
