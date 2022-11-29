@@ -2,10 +2,18 @@ import React, { useEffect, useState } from "react";
 import { getDocs, collection, query, orderBy } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { db } from "../service/firebase";
+import { useNavigate } from "react-router-dom";
 
-function Timeline() {
+function Timeline({ isAuth }) {
     const [postLists, setPostList] = useState([]);
     const postsCollectionRef = collection(db, "posts");
+
+    let navigate = useNavigate();
+    useEffect (() => {
+        if (!isAuth) {
+            navigate("/login"); 
+        }
+    }, []);
 
     useEffect(() => {
         const getPosts = async () => {

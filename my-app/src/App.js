@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
+import { auth } from "./service/firebase"
 import Home from "./pages/Home";
 import AboutUs from "./pages/AboutUs";
-import LoginSignup from "./pages/LoginSignup";
+import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Timeline from "./pages/Timeline";
 import CreatePost from "./pages/CreatePost";
@@ -12,32 +13,18 @@ import logo from "./images/logo.png";
 import Pool from "./service/userPool";
 import Dropdown from "rsuite/Dropdown";
 import "rsuite/dist/rsuite.min.css";
+import { signOut } from "firebase/auth";
 
-function App({ userRepository }) {
-  const [status, setStatus] = useState(false); //status : loggedin : true, if not: false
-  const [user, setUser] = useState(null);
+function App({ userRepository }) { 
+  const [isAuth, setIsAuth] = useState(false); // is the person logged in?
 
-  const logout = () => {
-    const user = Pool.getCurrentUser();
-    if (user) {
-      user.signOut();
-      setStatus(false);
-      setUser(null);
+  const signUserOut = () => {
+    signOut(auth).then (() => {
+      localStorage.clear()
+      setIsAuth(false)
       window.location.pathname = "/"
-    }
+    });
   };
-
-    // const { getSession, logout } = useContext(AccountContext);
-
-    useEffect(() => {
-      const user = Pool.getCurrentUser();
-      if (user) {
-        setUser(user);
-        setStatus(true);
-      } else {
-        // console.log("No one logged-in yet");
-      }
-    }, []);  
   
   return (
     <BrowserRouter>
@@ -55,7 +42,7 @@ function App({ userRepository }) {
             About Us
           </NavLink>
 
-          {status ? (
+          {isAuth ? (
             <div className="dropDownMenu">
               <Dropdown title="Buy/Sell">
                 <Dropdown.Item as={Link} to="/myprofile"> My Profile </Dropdown.Item>
@@ -67,13 +54,11 @@ function App({ userRepository }) {
             ""
           )}
 
-          {status ? (
-            <span className="linkmenuItem" onClick={logout}>
-              Log out
-            </span>
+          {isAuth ? (
+            <button onClick={signUserOut}> Log Out </button>
           ) : (
-            <NavLink to="/loginsignup" className="linkmenuItem">
-              Login / Sign Up
+            <NavLink to="/login" className="linkmenuItem">
+              Login
             </NavLink>
           )}
 
@@ -83,14 +68,14 @@ function App({ userRepository }) {
         <Route path="/" element={<Home />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route
-          path="/loginsignup"
-          element={<LoginSignup userRepository={userRepository} />}
+          path="/login"
+          element={<LoginSignup setIsAuth={setIsAuth} />}
         />
         <Route path="/myprofile" element={<Profile />} />
-        <Route path="/timeline" element={<Timeline />} />
+        <Route path="/timeline" element={<Timeline isAuth={isAuth}/>} />
         <Route 
           path="/createpost" 
-          element={<CreatePost />} 
+          element={<CreatePost isAuth={isAuth}/>} 
         />
       </Routes>
     </BrowserRouter>

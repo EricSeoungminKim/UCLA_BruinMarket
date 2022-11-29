@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import firebase from 'firebase/compat/app';
 import 'firebase/firestore';
 import { getFirestore } from "firebase/firestore";
-import { getAuth } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -22,5 +22,6 @@ const otherProjectFirebaseConfig = {
 
 export const firebaseApp = firebase.initializeApp(firebaseConfig);
 export const otherProject = firebase.initializeApp(otherProjectFirebaseConfig, "other");
-export const auth = getAuth(firebaseApp);
+export const auth = getAuth(otherProject);
 export const db = getFirestore(otherProject);
+export const provider = new GoogleAuthProvider(otherProject);
