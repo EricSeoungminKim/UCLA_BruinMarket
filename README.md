@@ -32,8 +32,8 @@ npm start
 ```
 
 ### _(MUST DOWNLOAD Node.js to do step 4 and further)_
-
-<p><img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=ericseoungminkim&show_icons=true&locale=en&layout=compact" alt="ericseoungminkim" /></p>
     
 ## 🔗 Links 🔗
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/seoungmin-kim-400597222/)
+
+<p><img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=ericseoungminkim&show_icons=true&locale=en&layout=compact" alt="ericseoungminkim" /></p>
