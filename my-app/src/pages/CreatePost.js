@@ -2,17 +2,22 @@ import React, { useState, useRef, useContext } from "react";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../service/firebase";
 import Navbar from "../components/Navbar";
-import { AccountContext } from "../components/Account";
+import CurrencyInput from 'react-currency-input-field';
 
 function CreatePost() {
     const [title, setTitle] = useState(""); // save what user is typing in the textbox
     const [postText, setPostText] = useState("");
+    const status = "For Sale"
     const postsCollectionRef = collection(db, "posts"); // add posts to a table in the firestore database named "posts"
 
     const createPost = async () => {
+        const current = new Date();
+        const date = `${current.getMonth()+1}/${current.getDate()}/${current.getFullYear()}`;
         await addDoc(postsCollectionRef, {
             title, 
-            postText
+            postText,
+            date, 
+            status
             // how to access account's name?
         });
         window.location.pathname = "/timeline"
@@ -27,14 +32,27 @@ function CreatePost() {
                     <div className="inputGp"> 
                         <label> Title: </label>
                         <input placeholder="Title..." onChange={(event) => {
-                            setPostText(event.target.value);
+                            setTitle(event.target.value);
                         }}/>
                     </div>
                     <div className="inputGp">
                         <label> Post: </label>
                         <textarea placeholder="Post..." onChange={(event) => {
-                            setTitle(event.target.value);
+                            setPostText(event.target.value);
                         }}/>
+                    </div>
+                    <div className="inputGp">
+                        <label> Price: </label>
+                        <CurrencyInput
+                            id="Price"
+                            name="Price"
+                            placeholder="Please enter a number"
+                            defaultValue={0}
+                            decimalsLimit={2}
+                            decimalScale={2}
+                            prefix={'$'}
+                            onValueChange={(value, name) => console.log(value, name)}
+                        />
                     </div>
                     <button onClick={createPost}> Submit Post</button>
                 </div>
