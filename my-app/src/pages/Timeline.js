@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { getDocs, collection, query, orderBy } from "firebase/firestore";
 import { Link } from "react-router-dom";
 import { db } from "../service/firebase";
-import Navbar from "../components/Navbar";
 
 function Timeline() {
     const [postLists, setPostList] = useState([]);
@@ -18,12 +17,11 @@ function Timeline() {
     }, []);
 
     const displayComments = () => {
-        console.log("HELLO")
+        console.log("HELLO") 
     };
     
     return (
         <React.Fragment>
-        <Navbar />
         <div className="homePage">
             {postLists.map((post) => {
                 return (

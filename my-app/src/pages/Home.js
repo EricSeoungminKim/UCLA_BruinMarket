@@ -1,12 +1,10 @@
 import React from "react";
-import Navbar from "../components/Navbar";
 import roycehall from "../images/roycehall.jpeg";
 import { NavLink, BrowserRouter as Router, Link } from "react-router-dom";
 
 function Home() {
   return (
     <React.Fragment>
-      <Navbar />
       <div
         className="homepageBanner"
         style={{ backgroundImage: `url(${roycehall})` }}

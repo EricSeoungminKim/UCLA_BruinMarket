@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../components/Navbar";
 import Auth from "../components/Auth";
 
 function LoginSignup({ userRepository }) {
@@ -23,7 +22,6 @@ function LoginSignup({ userRepository }) {
 
   return (
     <React.Fragment>
-      <Navbar />
 
       <Auth onAdd={createUser} deleteUser={deleteUser} />
     </React.Fragment>

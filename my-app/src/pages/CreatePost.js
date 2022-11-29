@@ -1,7 +1,6 @@
 import React, { useState, useRef, useContext } from "react";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../service/firebase";
-import Navbar from "../components/Navbar";
 import CurrencyInput from 'react-currency-input-field';
 
 function CreatePost() {
@@ -31,7 +30,6 @@ function CreatePost() {
 
     return (
         <React.Fragment>
-        <Navbar />
             <div className="createPostPage"> 
                 <div className="cpContainer">
                     <h1> Create a Post </h1>

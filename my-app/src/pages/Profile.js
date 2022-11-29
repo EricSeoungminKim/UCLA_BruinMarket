@@ -1,7 +1,6 @@
 //Profile version: for others viewing profiles that are not their own
 
 import React, {Component} from "react";
-import Navbar from "../components/Navbar";
 import {StyleSheet, View, Text, Image} from "react-native";
 
 //backend:
@@ -157,7 +156,6 @@ class Profile extends Component {
   render(){
     return (
     <React.Fragment>
-      <Navbar /> 
       
       <View style={{flexDirection: 'row'}}>
           <View style={{flex:1}}>
