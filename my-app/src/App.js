@@ -8,6 +8,7 @@ import LoginSignup from "./pages/LoginSignup";
 import Profile from "./pages/Profile";
 import Timeline from "./pages/Timeline";
 import CreatePost from "./pages/CreatePost";
+import Search from "./pages/Search";
 
 import logo from "./images/logo.png";
 import Dropdown from "rsuite/Dropdown";
@@ -39,6 +40,9 @@ function App({ userRepository }) {
           </NavLink>
           <NavLink to="/aboutus" className="linkmenuItem">
             About Us
+          </NavLink>
+          <NavLink to="/search" className="linkmenuItem">
+            Search
           </NavLink>
           <NavLink to="/timeline" className="linkmenuItem">
             Timeline
@@ -72,6 +76,7 @@ function App({ userRepository }) {
         <Route path="/timeline" element={<Timeline isAuth={isAuth}/>} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/myprofile" element={<Profile />} />
+        <Route path="/search" element={<Search />} />
       </Routes>
     </BrowserRouter>
   );
