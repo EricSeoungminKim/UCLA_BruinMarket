@@ -6,7 +6,7 @@
 
 ## 📝 Documentation 📝
 
-[Project Proposal(will be added)](https://linktodocumentation)
+[Project Proposal](https://docs.google.com/document/d/153SG_c-b2jPUeQPYvu6sdDVM08W_Pq8JH2Jua1BsYVo/edit)
 
 
 ## 👨‍💻 Installation 👨‍💻 
