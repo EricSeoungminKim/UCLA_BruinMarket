@@ -20,7 +20,10 @@ function App({ userRepository }) {
         />
         <Route path="/myprofile" element={<Profile />} />
         <Route path="/timeline" element={<Timeline />} />
-        <Route path="/createpost" element={<CreatePost />} />
+        <Route 
+          path="/createpost" 
+          element={<CreatePost />} 
+        />
       </Routes>
     </BrowserRouter>
   );

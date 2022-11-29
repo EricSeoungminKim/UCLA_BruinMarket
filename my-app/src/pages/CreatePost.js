@@ -14,12 +14,16 @@ function CreatePost() {
     const createPost = async () => {
         const current = new Date();
         const date = `${current.getMonth()+1}/${current.getDate()}/${current.getFullYear()}`;
+        const tmp = new Date();
+        const timestamp = tmp.getTime();
+
         await addDoc(postsCollectionRef, {
             title, 
             postText,
             date, 
             status,
-            value: `$${value}`
+            value: `$${value}`,
+            timestamp
             // how to access account's name?
         });
         window.location.pathname = "/timeline"

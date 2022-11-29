@@ -8,7 +8,7 @@ function Timeline() {
     const postsCollectionRef = collection(db, "posts");
     useEffect(() => {
         const getPosts = async () => {
-          const data = await getDocs(query(postsCollectionRef, orderBy('date', 'asc')));
+          const data = await getDocs(query(postsCollectionRef, orderBy('timestamp', 'desc')));
           setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
         };
     
