@@ -4,13 +4,12 @@ import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
 import { auth } from "./service/firebase"
 import Home from "./pages/Home";
 import AboutUs from "./pages/AboutUs";
-import Login from "./pages/Login";
+import LoginSignup from "./pages/LoginSignup";
 import Profile from "./pages/Profile";
 import Timeline from "./pages/Timeline";
 import CreatePost from "./pages/CreatePost";
 
 import logo from "./images/logo.png";
-import Pool from "./service/userPool";
 import Dropdown from "rsuite/Dropdown";
 import "rsuite/dist/rsuite.min.css";
 import { signOut } from "firebase/auth";
@@ -58,7 +57,7 @@ function App({ userRepository }) {
             <button onClick={signUserOut}> Log Out </button>
           ) : (
             <NavLink to="/login" className="linkmenuItem">
-              Login
+              Login / Sign Up
             </NavLink>
           )}
 
