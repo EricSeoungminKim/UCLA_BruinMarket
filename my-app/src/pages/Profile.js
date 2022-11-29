@@ -1,19 +1,8 @@
-import React, {useState, Component} from "react";
+//Profile version: for others viewing profiles that are not their own
+
+import React, {Component} from "react";
 import Navbar from "../components/Navbar";
 import {StyleSheet, View, Text, Image} from "react-native";
-
-var name="FIRST LAST"
-var year = "2024"
-var major = "Computer Science"
-var intro = "Hello, I like to sell things. Like a lot of things that can be sold. I sell things that sell to be sold. Selling things is very fun to me."
-
-var title = "Chair"
-var postDate = "11/27/22"
-var updateDate = "11/27/22"
-var status = "For Sale" //sale, trade, rent //sold, traded, rented
-var price = 19.00
-price = price.toFixed(2)
-var description = "Chair to sit in." 
 
 //backend:
   //render new data after user shares their rating --> update # stars filled based on new avg rating
@@ -84,6 +73,13 @@ class RateUser extends Component{
 }
 
 class Product extends Component{
+  constructor(props){
+    super(props)
+    this.state = {
+
+    };
+  }
+
   //fits 3 product cards per row on screen
   render(){
     return(
@@ -97,11 +93,6 @@ class Product extends Component{
           <View style={{flexDirection: 'row'}}>
             <Text style={{fontWeight: 800}}> Date Posted: </Text>
             <Text>{this.props.postDate} </Text>
-          </View>
-          
-          <View style={{flexDirection: 'row'}}>
-            <Text style={{fontWeight: 800}}> Last Updated: </Text>
-            <Text>{this.props.updateDate} </Text>
           </View>
 
           <Text>    </Text>
@@ -129,8 +120,40 @@ class Product extends Component{
   }
 }
 
+var name="FIRST LAST"
+var year = "2024"
+var major = "Computer Science"
+var intro = "Hello, I like to sell things. Like a lot of things that can be sold. I sell things that sell to be sold. Selling things is very fun to me."
+
+var title = "Chair"
+var postDate = "11/27/22"
+//var updateDate = "11/27/22"
+var status = "For Sale" //sale, trade, rent //sold, traded, rented
+var price = 19.00
+price = price.toFixed(2)
+var description = "Chair to sit in." 
+
+var productInfo = []    //replace with info from firebase; info from firebase will initialize the product cards in cardInfo()
+var productCards = []
+
+productInfo[0] = title
+productInfo[1] = postDate
+productInfo[2] = status
+productInfo[3] = price
+productInfo[4] = description
+
+//array of product card info
+//use array of info to create array of product cards
+//display array of product cards
 
 class Profile extends Component {
+
+  cardInfo(){
+    for(let i=0; i<60; i++){
+      productCards[i] = <Product title={productInfo[0]} postDate={productInfo[1]} status={productInfo[2]} price={productInfo[3]} description={productInfo[4]}></Product>
+    }
+  }
+
   render(){
     return (
     <React.Fragment>
@@ -164,22 +187,28 @@ class Profile extends Component {
         <Text style={styles.name}> Products: </Text>
       </View>
 
-      <View style={{flexDirection: 'row', alignSelf: 'center'}}> 
-        <Product title={title} postDate={postDate} updateDate={updateDate} status={status} price={price} description={description}></Product>
-        <Product></Product>
-        <Product></Product>
+      <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+        {this.cardInfo()}
+        {productCards}
       </View>
-
-      <View style={{flexDirection: 'row', alignSelf: 'center'}}> 
-        <Product></Product>
-        <Product></Product>
-        <Product></Product>
-      </View>
+      
     </React.Fragment>
   )
   }
 }
 
+/*<View style={{flexDirection: 'row', alignSelf: 'center'}}> 
+        <Product title={productInfo[0]} postDate={productInfo[1]} updateDate={productInfo[2]} status={productInfo[3]} price={productInfo[4]} description={productInfo[5]}></Product>
+        <Product></Product>
+        <Product></Product>
+      </View>
+
+      <View style={{flexDirection: 'row', alignSelf: 'center'}}> 
+        <Product></Product>
+        <Product></Product>
+        <Product></Product>
+      </View>
+*/
 
 /* ADD NEW ITEM
   <View>
