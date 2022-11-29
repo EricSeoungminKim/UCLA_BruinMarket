@@ -12,13 +12,6 @@ function Timeline({ isAuth }) {
         console.log("HELLO") 
     };
 
-    let navigate = useNavigate();
-    useEffect (() => { // cannot create a post if not logged in
-        if (!isAuth) {
-            navigate("/login"); 
-        }
-    }, []);
-
     useEffect(() => {
         const getPosts = async () => {
           const data = await getDocs(query(postsCollectionRef, orderBy('timestamp', 'desc')));
