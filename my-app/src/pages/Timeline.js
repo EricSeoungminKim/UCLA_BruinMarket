@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { getDocs, collection, query, orderBy } from "firebase/firestore";
+import { Link } from "react-router-dom";
 import { db } from "../service/firebase";
 import Navbar from "../components/Navbar";
 
 function Timeline() {
     const [postLists, setPostList] = useState([]);
     const postsCollectionRef = collection(db, "posts");
+
     useEffect(() => {
         const getPosts = async () => {
           const data = await getDocs(query(postsCollectionRef, orderBy('timestamp', 'desc')));
@@ -13,7 +15,11 @@ function Timeline() {
         };
     
         getPosts();
-      }, []);
+    }, []);
+
+    const displayComments = () => {
+        console.log("HELLO")
+    };
     
     return (
         <React.Fragment>
@@ -24,7 +30,7 @@ function Timeline() {
                 <div className="post">
                     <div className="postHeader">
                     <div className="title">
-                        <h1> {post.title}</h1>
+                        <button onClick={displayComments}> {post.title} </button>
                     </div>
         
                     </div>
