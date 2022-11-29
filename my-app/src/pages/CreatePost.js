@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { addDoc, collection } from "firebase/firestore";
-import { db } from "../service/firebase";
+import { db, auth } from "../service/firebase";
 import CurrencyInput from 'react-currency-input-field';
 import { useNavigate } from "react-router-dom";
 
@@ -25,13 +25,14 @@ function CreatePost({ isAuth }) {
         const timestamp = tmp.getTime();
 
         await addDoc(postsCollectionRef, {
+            name: auth.currentUser.displayName, 
+            id: auth.currentUser.uid,
             title, 
             postText,
             date, 
             status,
             value: `$${value}`,
             timestamp
-            // how to access account's name?
         });
         window.location.pathname = "/timeline"
     };

@@ -15,7 +15,7 @@ import "rsuite/dist/rsuite.min.css";
 import { signOut } from "firebase/auth";
 
 function App({ userRepository }) { 
-  const [isAuth, setIsAuth] = useState(false); // is the person logged in?
+  const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth")); // is the person logged in?
 
   const signUserOut = () => {
     signOut(auth).then (() => {
@@ -40,13 +40,15 @@ function App({ userRepository }) {
           <NavLink to="/aboutus" className="linkmenuItem">
             About Us
           </NavLink>
+          <NavLink to="/timeline" className="linkmenuItem">
+            Timeline
+          </NavLink>
 
           {isAuth ? (
             <div className="dropDownMenu">
               <Dropdown title="Buy/Sell">
                 <Dropdown.Item as={Link} to="/myprofile"> My Profile </Dropdown.Item>
                 <Dropdown.Item as={Link} to="/createpost">Create a Post</Dropdown.Item>
-                <Dropdown.Item as={Link} to="/timeline"> Timeline </Dropdown.Item>
               </Dropdown>
             </div>
           ) : (
@@ -65,17 +67,11 @@ function App({ userRepository }) {
       </nav>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/aboutus" element={<AboutUs />} />
-        <Route
-          path="/login"
-          element={<LoginSignup setIsAuth={setIsAuth} />}
-        />
-        <Route path="/myprofile" element={<Profile />} />
+        <Route path="/createpost" element={<CreatePost isAuth={isAuth}/>} />
+        <Route path="/login" element={<LoginSignup setIsAuth={setIsAuth}/>} />
         <Route path="/timeline" element={<Timeline isAuth={isAuth}/>} />
-        <Route 
-          path="/createpost" 
-          element={<CreatePost isAuth={isAuth}/>} 
-        />
+        <Route path="/aboutus" element={<AboutUs />} />
+        <Route path="/myprofile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );
