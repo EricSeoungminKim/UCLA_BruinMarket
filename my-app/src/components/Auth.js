@@ -19,7 +19,7 @@ const Auth = ({ onAdd }) => {
     // setAuthMode(authMode === "signin" ? "signup" : "signin");
   };
 
-  // const { name, uid, major, email, password } = useState(""); //deconstructioning이용!
+  // const { name, uid, major, email, password } = useState(""); //deconstructioning
   const formRef = useRef();
   const nameRef = useRef();
   const uidRef = useRef();

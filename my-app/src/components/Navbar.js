@@ -1,10 +1,6 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink, BrowserRouter as Router, Link } from "react-router-dom";
-import logoImage from "../images/logoImage.png";
 import logo from "../images/logo.png";
-import DropDown from "./DropDown";
-import AboutUsDropDown from "./AboutUsDropDown";
-import { AccountContext } from "./Account";
 import Pool from "../service/userPool";
 import Dropdown from "rsuite/Dropdown";
 import "rsuite/dist/rsuite.min.css";
@@ -19,7 +15,7 @@ const Navbar = () => {
       user.signOut();
       setStatus(false);
       setUser(null);
-      window.location.reload();
+      window.location.pathname = "/"
     }
   };
 
@@ -33,7 +29,7 @@ const Navbar = () => {
     } else {
       // console.log("No one logged-in yet");
     }
-  });
+  }, []);
 
   return (
     <nav className="navbar">

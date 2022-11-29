@@ -2,9 +2,6 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import roycehall from "../images/roycehall.jpeg";
 import { NavLink, BrowserRouter as Router, Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 
 function Home() {
   return (
