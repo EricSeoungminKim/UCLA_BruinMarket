@@ -7,6 +7,7 @@ import CurrencyInput from 'react-currency-input-field';
 function CreatePost() {
     const [title, setTitle] = useState(""); // save what user is typing in the textbox
     const [postText, setPostText] = useState("");
+    const [value, setValue] = useState("");
     const status = "For Sale"
     const postsCollectionRef = collection(db, "posts"); // add posts to a table in the firestore database named "posts"
 
@@ -17,7 +18,8 @@ function CreatePost() {
             title, 
             postText,
             date, 
-            status
+            status,
+            value: `$${value}`
             // how to access account's name?
         });
         window.location.pathname = "/timeline"
@@ -50,8 +52,7 @@ function CreatePost() {
                             defaultValue={0}
                             decimalsLimit={2}
                             decimalScale={2}
-                            prefix={'$'}
-                            onValueChange={(value, name) => console.log(value, name)}
+                            onValueChange={(value, name) => setValue(value)}
                         />
                     </div>
                     <button onClick={createPost}> Submit Post</button>

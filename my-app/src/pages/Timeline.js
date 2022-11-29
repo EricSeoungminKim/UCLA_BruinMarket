@@ -29,7 +29,7 @@ function Timeline() {
         
                     </div>
                     <div className="postTextContainer"> {post.postText} </div>
-                    <div className="postTextContainer"> {post.date} {post.status} </div>
+                    <div className="postTextContainer"> {post.date} {post.value} {post.status} </div>
                 </div>
                 );
             })}
