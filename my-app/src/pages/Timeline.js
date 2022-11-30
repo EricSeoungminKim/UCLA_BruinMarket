@@ -46,7 +46,6 @@ function Timeline({ isAuth }) {
         </View>
         </React.Fragment>
     );
-    // add author and delete post button
 }
 
 const styles = StyleSheet.create({
