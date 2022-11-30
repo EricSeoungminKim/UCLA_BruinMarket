@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getDocs, collection, query, orderBy, deleteDoc, doc } from "firebase/firestore";
+import { getDocs, collection, query, orderBy, deleteDoc, doc, addDoc } from "firebase/firestore";
 import { Link, renderMatches } from "react-router-dom";
 import { db, auth } from "../service/firebase";
 import { useNavigate } from "react-router-dom";
@@ -8,10 +8,9 @@ import {Text, View, StyleSheet} from 'react-native';
 function Timeline({ isAuth }) {
     const [postLists, setPostList] = useState([]);
     const postsCollectionRef = collection(db, "posts");
+    const [comment, setComment] = useState("");
+    const [inputValue, setInputValue] = useState("");
 
-    const displayComments = () => {
-        console.log("HELLO") 
-    };
 
     useEffect(() => {
         const getPosts = async () => {
@@ -20,6 +19,30 @@ function Timeline({ isAuth }) {
         };
         getPosts();
     }, []);
+
+    const addComment = async (id) => {
+        const current = new Date();
+        const date = `${current.getMonth()+1}/${current.getDate()}/${current.getFullYear()}`;
+        const tmp = new Date();
+        const timestamp = tmp.getTime();
+
+        const newCollectionRef = collection(db, 'posts', id, 'comments');
+        await addDoc(newCollectionRef, {
+            name: auth.currentUser.displayName, 
+            comment,
+            date, 
+            timestamp
+        })
+        viewComments(id);
+    };
+
+    const viewComments = async (id) => {
+        const commentsRef = collection(db, 'posts', id, 'comments');
+        const data = await getDocs(query(commentsRef, orderBy('timestamp', 'desc')));
+        data.forEach((doc) => {
+            console.log(doc.id, " => ", doc.data());
+        });
+    };
     
     return (
         <React.Fragment>
@@ -30,7 +53,7 @@ function Timeline({ isAuth }) {
                     <View className="post" style={styles.post}>
                         <View className="postHeader" style={styles.postHeader}>
                             <View className="title" style={styles.title}>
-                                <button classsName="button" onClick={displayComments} style={styles.button}> {post.title} </button>
+                                 {post.title}
                             </View>
                         </View>
                         <label className="postTextContainer" style={styles.postTextContainer}> {post.postText} </label>
@@ -39,6 +62,21 @@ function Timeline({ isAuth }) {
                         <View className="postTextContainer" style={styles.postDescription}> Posted on: {post.date} </View>
                         <View className="postTextContainer" style={styles.postDescription}> Seller: {post.name}  </View>
                         <View className="postTextContainer" style={styles.postDescription}> Status: {post.status} </View>
+                        {isAuth ? (
+                            <div className="inputGp"> 
+                                <input value={inputValue} placeholder="Comment..." onChange={(event) => {
+                                    setComment(event.target.value);
+                                    setInputValue(event.target.value);
+                                }}/>
+                                <button onClick={() => {
+                                    addComment(post.id);
+                                    setInputValue("");
+                                }}> Post </button>
+                                <button onClick={() => viewComments(post.id)}> View Comments </button>
+                            </div>
+                        ) : (
+                            ""
+                        )}
                     </View>
                     </View>
                     );
