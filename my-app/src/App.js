@@ -63,7 +63,7 @@ function App({ userRepository }) {
             <button onClick={signUserOut}> Log Out </button>
           ) : (
             <NavLink to="/login" className="linkmenuItem">
-              Login / Sign Up
+              Login
             </NavLink>
           )}
 
