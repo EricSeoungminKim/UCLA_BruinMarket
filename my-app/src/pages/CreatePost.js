@@ -12,6 +12,7 @@ function CreatePost({ isAuth }) {
     const [value, setValue] = useState("");
     const status = "For Sale"
     const [image, setImage] = useState("")  // FIXME: IDK IF THIS IS RIGHT, also only allows 1 image -emily
+    const [errorMsg, setErrorMsg] = useState("")
     const postsCollectionRef = collection(db, "posts"); // add posts to a table in the firestore database named "posts"
 
     let navigate = useNavigate();
@@ -22,28 +23,33 @@ function CreatePost({ isAuth }) {
     }, []);
 
     const createPost = async () => {
-        const current = new Date();
-        const date = `${current.getMonth()+1}/${current.getDate()}/${current.getFullYear()}`;
-        const tmp = new Date();
-        const timestamp = tmp.getTime();
+        // Make all entries required (FIXME: NOT IMAGE YET)
+        if (title == ""|| postText == ""|| value == "") {
+            setErrorMsg("ERROR: Please fill in all entries.");
+        } else {
+            const current = new Date();
+            const date = `${current.getMonth()+1}/${current.getDate()}/${current.getFullYear()}`;
+            const tmp = new Date();
+            const timestamp = tmp.getTime();
 
-        const document = await addDoc(postsCollectionRef, {
-            name: auth.currentUser.displayName, 
-            id: auth.currentUser.uid,
-            title, 
-            postText,
-            date, 
-            status,
-            value: `$${value}`,
-            timestamp
-        });
+            const document = await addDoc(postsCollectionRef, {
+                name: auth.currentUser.displayName, 
+                id: auth.currentUser.uid,
+                title, 
+                postText,
+                date, 
+                status,
+                value: `$${value}`,
+                timestamp
+            });
 
-        const newCollectionRef = collection(db, 'posts', document.id, 'comments');
-        await addDoc(newCollectionRef, {
-            tmp: ""
-        })
-        
-        window.location.pathname = "/timeline"
+            const newCollectionRef = collection(db, 'posts', document.id, 'comments');
+            await addDoc(newCollectionRef, {
+                tmp: ""
+            })
+            
+            window.location.pathname = "/timeline"
+        }
     };
 
     return (
@@ -53,7 +59,7 @@ function CreatePost({ isAuth }) {
 
             <View style={{flexDirection: 'row'}}>
                 <Text style={styles.labels}> Title:                        </Text>
-                <input style={{width: 1000, height: 30, margin: 10}} placeholder="Enter a title here." onChange={(event) => {setTitle(event.target.value);}}/>
+                <input style={{width: 1000, height: 30, margin: 10}} placeholder="Enter a title here." onChange={(event) => {setTitle(event.target.value);}} />
             </View>
 
             <View style={{flexDirection: 'row'}}>
@@ -86,8 +92,12 @@ function CreatePost({ isAuth }) {
 
             <View style={{alignSelf: 'center'}}>
                 <button style={styles.submitButton} onClick={createPost}>
-                    <Text style={{fontWeight: 800, color: 'white'}}> Submit post! </Text>
+                    <Text style={styles.buttonText}> Submit post! </Text>
                 </button>
+            </View>
+
+            <View>
+                <Text style={styles.errorMsg}>{errorMsg}</Text>
             </View>
 
             </View>
@@ -122,7 +132,21 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     backgroundColor: '#019FAF',
     opacity: 0.70,
+    marginTop: 20
     },
+
+    buttonText: {
+        fontWeight: 800,
+        color: 'white',
+        fontFamily: "LoveloBlack"
+    },
+
+    errorMsg: {
+        alignSelf: "center",
+        margin: 15,
+        color: "red",
+        fontFamily: "LoveloBlack"
+    }
 
 })
 
