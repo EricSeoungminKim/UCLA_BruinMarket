@@ -71,6 +71,11 @@ p {
   align-items: center;
   justify-content: space-between;
   background-color: var(--color-blue);
+  position: -webkit-sticky;
+  position: sticky;
+  top: -5px;
+  z-index: 2;
+  box-shadow: 0 0.125rem 0.25rem 0 rgb(0 0 0 / 12%);
 }
 
 .navbar button {
