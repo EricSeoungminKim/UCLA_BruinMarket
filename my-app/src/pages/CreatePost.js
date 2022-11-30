@@ -10,6 +10,7 @@ function CreatePost({ isAuth }) {
     const [postText, setPostText] = useState("");
     const [value, setValue] = useState("");
     const status = "For Sale"
+    const [image, setImage] = useState("")  // FIXME: IDK IF THIS IS RIGHT, also only allows 1 image -emily
     const postsCollectionRef = collection(db, "posts"); // add posts to a table in the firestore database named "posts"
 
     let navigate = useNavigate();
@@ -70,6 +71,7 @@ function CreatePost({ isAuth }) {
 
             <View style={{flexDirection: 'row'}}>
                 <Text style={styles.labels}> Upload images: </Text> 
+                <input type="file" style={{margin: 10, marginLeft: 30}} onChange={(event) => {setImage(event.target.value);}} />
             </View> 
 
             <View style={{alignSelf: 'center'}}>
@@ -89,14 +91,14 @@ const styles = StyleSheet.create({
     title: {
     fontSize: 60,
     fontWeight: 1000,
-    margin: 30,
+    margin: 30
     },
 
     labels: {
     marginLeft: 35,
     fontWeight: 1000,
     fontSize: 20,
-    padding: 10,
+    padding: 10
     },
 
     submitButton: {

@@ -10,7 +10,7 @@ import Timeline from "./pages/Timeline";
 import CreatePost from "./pages/CreatePost";
 import Search from "./pages/Search";
 
-import logo from "./images/logo.png";
+import logo from "./images/BruinMarketplaceLogo.png";
 import Dropdown from "rsuite/Dropdown";
 import "rsuite/dist/rsuite.min.css";
 import { signOut } from "firebase/auth";

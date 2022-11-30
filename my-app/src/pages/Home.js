@@ -1,6 +1,8 @@
 import React from "react";
 import roycehall from "../images/roycehall.jpeg";
 import { NavLink, BrowserRouter as Router, Link } from "react-router-dom";
+import {StyleSheet, View, Text, Image} from "react-native";
+import "../App.css"
 
 function Home() {
   return (
