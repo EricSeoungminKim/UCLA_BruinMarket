@@ -11,6 +11,9 @@ function LoginSignup({ setIsAuth }) {
     const signInWithGoogle = () => {
       signInWithPopup(auth, provider).then((result) => {
         localStorage.setItem("isAuth", true);
+        localStorage.setItem("displayName", JSON.stringify(auth.currentUser.displayName));
+        localStorage.setItem("email", JSON.stringify(auth.currentUser.email));
+        localStorage.setItem("uid", JSON.stringify(auth.currentUser.uid));
         setIsAuth(true);
         navigate("/");
       });
