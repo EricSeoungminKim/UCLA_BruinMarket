@@ -1,7 +1,6 @@
-//Profile version: for others viewing profiles that are not their own
-
 import React, {Component} from "react";
 import {StyleSheet, View, Text, Image} from "react-native";
+import {Link} from 'react-router-dom';
 
 //backend:
   //render new data after user shares their rating --> update # stars filled based on new avg rating
@@ -72,13 +71,6 @@ class RateUser extends Component{
 }
 
 class Product extends Component{
-  constructor(props){
-    super(props)
-    this.state = {
-
-    };
-  }
-
   //fits 3 product cards per row on screen
   render(){
     return(
@@ -112,7 +104,6 @@ class Product extends Component{
             <Text style={{fontWeight: 800}}> Description: </Text>
             <Text>{this.props.description} </Text>
           </View>
-
         </View>
       </View>
     )
@@ -185,6 +176,12 @@ class Profile extends Component {
         <Text style={styles.name}> Products: </Text>
       </View>
 
+      <Link to="/CreatePost" style={{alignSelf: 'center'}}>
+        <button style={styles.postButton}>
+            <Text style={{fontWeight: 800, color: 'white'}}> Create a new post! </Text>
+        </button>
+      </Link>
+
       <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
         {this.cardInfo()}
         {productCards}
@@ -194,29 +191,6 @@ class Profile extends Component {
   )
   }
 }
-
-/*<View style={{flexDirection: 'row', alignSelf: 'center'}}> 
-        <Product title={productInfo[0]} postDate={productInfo[1]} updateDate={productInfo[2]} status={productInfo[3]} price={productInfo[4]} description={productInfo[5]}></Product>
-        <Product></Product>
-        <Product></Product>
-      </View>
-
-      <View style={{flexDirection: 'row', alignSelf: 'center'}}> 
-        <Product></Product>
-        <Product></Product>
-        <Product></Product>
-      </View>
-*/
-
-/* ADD NEW ITEM
-  <View>
-      <View style={{padding: 50}}>    
-        <View style={{alignSelf: 'center' , padding: 10, width: 350, height: 475, borderWidth: 2, borderColor: '#019FAF'}}>
-          <Text> Add new item </Text>
-        </View>
-      </View>
-      </View>
-*/
 
 const styles=StyleSheet.create({
 
@@ -249,6 +223,16 @@ const styles=StyleSheet.create({
       borderWidth: 2,
       alignSelf: 'center',
       padding: 5,
+    },
+
+    postButton:{
+      width: 400,
+      height: 30,
+      borderRadius: 3,
+      borderColor: '#019FAF',
+      borderWidth: 2,
+      backgroundColor: '#019FAF',
+      opacity: 0.70,
     },
 
 })
