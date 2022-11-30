@@ -69,8 +69,9 @@ function CreatePost({ isAuth }) {
             </View>
 
             <View style={{flexDirection: 'row'}}>
-                <Text style={styles.labels}> Upload images: </Text> 
+                <Text style={styles.labels}> Upload images: <button> Add image </button> </Text> 
             </View> 
+
 
             <View style={{alignSelf: 'center'}}>
                 <button style={styles.submitButton} onClick={createPost}>
