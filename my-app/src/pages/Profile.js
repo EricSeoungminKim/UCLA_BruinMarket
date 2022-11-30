@@ -1,3 +1,66 @@
+import React, { useEffect, useState } from "react";
+import { db, auth } from "../service/firebase";
+import { collection, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
+
+function Profile() {
+  const user = auth.currentUser;
+  const displayName = user.displayName;
+  const email = user.email;
+  const uid = user.uid;
+
+  const [postLists, setPostList] = useState([]);
+  const postsCollectionRef = collection(db, "posts");
+
+  useEffect(() => { // get posts that match user's id == belongs to user
+    const getPosts = async () => {
+      const data = await getDocs(query(postsCollectionRef, where('id', '==', uid)));
+      setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+    getPosts();
+  }, []);
+  
+  return (
+    <React.Fragment>
+    <div className="center">
+      <div className="profile">
+        <h1>Profile</h1>
+        <p>
+          <strong>Name: </strong>
+          {displayName}
+        </p>
+        <p>
+          <strong>Email: </strong>
+          {email}
+        </p>
+      </div>
+      <div className="homePage">
+        <h1>My Posts</h1>
+        {postLists.map((post) => {
+            return ( // display my posts
+            <div className="post">
+                <div className="postHeader">
+                  <p>
+                    <strong> {post.title} </strong>
+                  </p>
+                </div>
+                <div className="postTextContainer"> {post.postText} </div>
+                <div className="postTextContainer"> 
+                  {post.date} {post.value} 
+                  <button> {post.status} </button> {/* implement being able to change the status from For Sale to Sold! */}
+                </div>
+            </div>
+            );
+        })}
+      </div>
+    </div>
+    </React.Fragment>
+  );
+}
+
+export default Profile;
+
+
+{/*
 import React, {Component} from "react";
 import {StyleSheet, View, Text, Image} from "react-native";
 import {Link} from 'react-router-dom';
@@ -236,5 +299,5 @@ const styles=StyleSheet.create({
     },
 
 })
-
 export default Profile;
+*/}

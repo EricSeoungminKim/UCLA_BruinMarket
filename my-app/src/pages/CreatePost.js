@@ -26,7 +26,7 @@ function CreatePost({ isAuth }) {
         const tmp = new Date();
         const timestamp = tmp.getTime();
 
-        await addDoc(postsCollectionRef, {
+        const document = await addDoc(postsCollectionRef, {
             name: auth.currentUser.displayName, 
             id: auth.currentUser.uid,
             title, 
@@ -36,6 +36,12 @@ function CreatePost({ isAuth }) {
             value: `$${value}`,
             timestamp
         });
+
+        const newCollectionRef = collection(db, 'posts', document.id, 'comments');
+        await addDoc(newCollectionRef, {
+            tmp: ""
+        })
+        
         window.location.pathname = "/timeline"
     };
 
@@ -70,9 +76,12 @@ function CreatePost({ isAuth }) {
             </View>
 
             <View style={{flexDirection: 'row'}}>
+
                 <Text style={styles.labels}> Upload images: </Text> 
                 <input type="file" style={{margin: 10, marginLeft: 30}} onChange={(event) => {setImage(event.target.value);}} />
+
             </View> 
+
 
             <View style={{alignSelf: 'center'}}>
                 <button style={styles.submitButton} onClick={createPost}>
