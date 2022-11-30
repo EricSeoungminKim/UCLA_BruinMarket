@@ -25,7 +25,7 @@ function CreatePost({ isAuth }) {
         const tmp = new Date();
         const timestamp = tmp.getTime();
 
-        await addDoc(postsCollectionRef, {
+        const document = await addDoc(postsCollectionRef, {
             name: auth.currentUser.displayName, 
             id: auth.currentUser.uid,
             title, 
@@ -35,6 +35,12 @@ function CreatePost({ isAuth }) {
             value: `$${value}`,
             timestamp
         });
+
+        const newCollectionRef = collection(db, 'posts', document.id, 'comments');
+        await addDoc(newCollectionRef, {
+            tmp: ""
+        })
+        
         window.location.pathname = "/timeline"
     };
 

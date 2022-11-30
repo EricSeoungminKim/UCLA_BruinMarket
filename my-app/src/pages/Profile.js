@@ -20,6 +20,7 @@ function Profile() {
   }, []);
   
   return (
+    <React.Fragment>
     <div className="center">
       <div className="profile">
         <h1>Profile</h1>
@@ -52,6 +53,7 @@ function Profile() {
         })}
       </div>
     </div>
+    </React.Fragment>
   );
 }
 

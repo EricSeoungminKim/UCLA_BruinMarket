@@ -23,27 +23,27 @@ function Timeline({ isAuth }) {
     
     return (
         <React.Fragment>
-        <View className="homePage" style={styles.homePage}>
-            {postLists.map((post) => {
-                return (
-                    <View style={{alignItems: "center"}}>
-                <View className="post" style={styles.post}>
-                    <View className="postHeader" style={styles.postHeader}>
-                        <View className="title" style={styles.title}>
-                            <button classsName="button" onClick={displayComments} style={styles.button}> {post.title} </button>
+            <View className="homePage" style={styles.homePage}>
+                {postLists.map((post) => {
+                    return (
+                        <View style={{alignItems: "center"}}>
+                    <View className="post" style={styles.post}>
+                        <View className="postHeader" style={styles.postHeader}>
+                            <View className="title" style={styles.title}>
+                                <button classsName="button" onClick={displayComments} style={styles.button}> {post.title} </button>
+                            </View>
                         </View>
+                        <label className="postTextContainer" style={styles.postTextContainer}> {post.postText} </label>
+                        <View style={styles.image}>*INSERT IMAGE HERE*</View>
+                        <View className="postTextContainer" style={styles.postDescription}> Price: {post.value} </View>
+                        <View className="postTextContainer" style={styles.postDescription}> Posted on: {post.date} </View>
+                        <View className="postTextContainer" style={styles.postDescription}> Seller: {post.name}  </View>
+                        <View className="postTextContainer" style={styles.postDescription}> Status: {post.status} </View>
                     </View>
-                    <label className="postTextContainer" style={styles.postTextContainer}> {post.postText} </label>
-                    <View style={styles.image}>*INSERT IMAGE HERE*</View>
-                    <View className="postTextContainer" style={styles.postDescription}> Price: {post.value} </View>
-                    <View className="postTextContainer" style={styles.postDescription}> Posted on: {post.date} </View>
-                    <View className="postTextContainer" style={styles.postDescription}> Seller: {post.name}  </View>
-                    <View className="postTextContainer" style={styles.postDescription}> Status: {post.status} </View>
-                </View>
-                </View>
-                );
-            })}
-        </View>
+                    </View>
+                    );
+                })}
+            </View>
         </React.Fragment>
     );
 }
