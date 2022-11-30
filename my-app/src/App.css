@@ -232,6 +232,7 @@ p {
   margin: 0;
   display: flex;
   justify-content: flex-end;
+  font-family: "LoveloBlack";
 }
 
 .homepageBannerTitle a {

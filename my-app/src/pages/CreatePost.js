@@ -4,6 +4,7 @@ import { db, auth } from "../service/firebase";
 import CurrencyInput from 'react-currency-input-field';
 import { useNavigate } from "react-router-dom";
 import {View, Text, StyleSheet} from 'react-native';
+import "../App.css"
 
 function CreatePost({ isAuth }) {
     const [title, setTitle] = useState(""); // save what user is typing in the textbox
@@ -99,15 +100,18 @@ const styles = StyleSheet.create({
 
     title: {
     fontSize: 60,
-    fontWeight: 1000,
-    margin: 30
+    fontWeight: 500,
+    margin: 30,
+    alignSelf: "center",
+    fontFamily: "LoveloBlack"
     },
 
     labels: {
     marginLeft: 35,
-    fontWeight: 1000,
+    fontWeight: 200,
     fontSize: 20,
-    padding: 10
+    padding: 10,
+    fontFamily: "LoveloBlack"
     },
 
     submitButton: {
