@@ -3,7 +3,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { db, auth } from "../service/firebase";
 import CurrencyInput from 'react-currency-input-field';
 import { useNavigate } from "react-router-dom";
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
 import "../App.css"
 
 function CreatePost({ isAuth }) {
@@ -56,50 +56,54 @@ function CreatePost({ isAuth }) {
         <React.Fragment>
             <View>
                 <Text style={styles.title}> Create a Post! </Text>
+            <View style={{flexDirection: 'row', justifyContent: "center", flexShrink: 1}}>
+                <View>
+                    <View style={{flexDirection: 'row'}}>
+                        <Text style={styles.labels}> Title:                        </Text>
+                        <input style={{width: 750, height: 30, margin: 10}} placeholder="Enter a title for your product here." onChange={(event) => {setTitle(event.target.value);}} />
+                    </View>
 
-            <View style={{flexDirection: 'row'}}>
-                <Text style={styles.labels}> Title:                        </Text>
-                <input style={{width: 1000, height: 30, margin: 10}} placeholder="Enter a title here." onChange={(event) => {setTitle(event.target.value);}} />
+                    <View style={{flexDirection: 'row'}}>
+                        <Text style={styles.labels}> Description:           </Text>
+                        <textarea style={{width: 750, height: 200, margin: 10}} placeholder="Describe your product here." onChange={(event) => {setPostText(event.target.value);}}/>
+                    </View>
+
+                    <View style={{flexDirection: 'row'}}>
+                        <Text style={styles.labels}> Price:                       </Text>
+                        <CurrencyInput
+                                id="Price"
+                                name="Price"
+                                placeholder="Please enter a number."
+                                defaultValue={0}
+                                decimalsLimit={2}
+                                decimalScale={2}
+                                prefix={'$'}
+                                onValueChange={(value, name) => setValue(value)}
+                                style={{width: 100, height: 30, margin: 10}}
+                            />
+                    </View>
+
+                    <View style={{flexDirection: 'row'}}>
+
+                        <Text style={styles.labels}> Upload images: </Text> 
+                        <input type="file" style={{margin: 10, marginLeft: 30}} onChange={(event) => {setImage(event.target.value);}} />
+
+                    </View> 
+
+                    <View>
+                        <Text style={styles.errorMsg}>{errorMsg}</Text>
+                    </View>
+                </View>
+
+                <View>
+                    <Image style={styles.image} source={require('../images/Bear2.png')} />
+                </View>
             </View>
-
-            <View style={{flexDirection: 'row'}}>
-                <Text style={styles.labels}> Description:           </Text>
-                <textarea style={{width: 1000, height: 200, margin: 10}} placeholder="Describe your product here." onChange={(event) => {setPostText(event.target.value);}}/>
-            </View>
-
-            <View style={{flexDirection: 'row'}}>
-                <Text style={styles.labels}> Price:                       </Text>
-                <CurrencyInput
-                        id="Price"
-                        name="Price"
-                        placeholder="Please enter a number."
-                        defaultValue={0}
-                        decimalsLimit={2}
-                        decimalScale={2}
-                        prefix={'$'}
-                        onValueChange={(value, name) => setValue(value)}
-                        style={{width: 100, height: 30, margin: 10}}
-                    />
-            </View>
-
-            <View style={{flexDirection: 'row'}}>
-
-                <Text style={styles.labels}> Upload images: </Text> 
-                <input type="file" style={{margin: 10, marginLeft: 30}} onChange={(event) => {setImage(event.target.value);}} />
-
-            </View> 
-
-
-            <View style={{alignSelf: 'center'}}>
-                <button style={styles.submitButton} onClick={createPost}>
-                    <Text style={styles.buttonText}> Submit post! </Text>
-                </button>
-            </View>
-
-            <View>
-                <Text style={styles.errorMsg}>{errorMsg}</Text>
-            </View>
-
+                <View style={{alignSelf: 'center'}}>
+                    <button style={styles.submitButton} onClick={createPost}>
+                        <Text style={styles.buttonText}> Submit post! </Text>
+                    </button>
+                </View>
             </View>
         
     </React.Fragment>
@@ -132,7 +136,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     backgroundColor: '#019FAF',
     opacity: 0.70,
-    marginTop: 20
+    marginTop: 5
     },
 
     buttonText: {
@@ -146,6 +150,13 @@ const styles = StyleSheet.create({
         margin: 15,
         color: "red",
         fontFamily: "LoveloBlack"
+    },
+
+    image: {
+        width: 250,
+        height: 320,
+        alignSelf: 'center',
+        margin: 20
     }
 
 })

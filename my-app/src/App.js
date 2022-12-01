@@ -45,12 +45,12 @@ function App({ userRepository }) {
             Search
           </NavLink>
           <NavLink to="/timeline" className="linkmenuItem">
-            Timeline
+            Listings
           </NavLink>
 
           {isAuth ? (
             <div className="dropDownMenu">
-              <Dropdown title="Buy/Sell">
+              <Dropdown title="Account">
                 <Dropdown.Item as={Link} to="/myprofile"> My Profile </Dropdown.Item>
                 <Dropdown.Item as={Link} to="/createpost">Create a Post</Dropdown.Item>
               </Dropdown>
