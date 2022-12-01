@@ -60,11 +60,30 @@ function Timeline({ isAuth }) {
                                 <View>
                                     <img src={post.imageUrl} alt="No image" />
                                 </View>
+
+                                {/* Text describing the post. (title, price, status, seller, date, etc.) */}
                                 <View className="postTextContainer" style={styles.postTextContainer}> {post.postText} </View>
-                                <View className="postTextContainer" style={styles.postDescription}> Price: {post.value} </View>
-                                <View className="postTextContainer" style={styles.postDescription}> Posted on: {post.date} </View>
-                                <View className="postTextContainer" style={styles.postDescription}> Seller: {post.name}  </View>
-                                <View className="postTextContainer" style={styles.postDescription}> Status: {post.status} </View>
+
+                                <View className="postTextContainer" style={{flexDirection: 'row', marginLeft: 15}}>
+                                    <Text style={styles.postLabel}> Seller: </Text>
+                                    <Text style={styles.postDescription}> {post.name} </Text>
+                                </View>
+
+                                <View className="postTextContainer" style={{flexDirection: 'row', marginLeft: 15}}>
+                                    <Text style={styles.postLabel}> Posted on: </Text>
+                                    <Text style={styles.postDescription}> {post.date} </Text>
+                                </View>
+
+                                <View className="postTextContainer" style={{flexDirection: 'row', marginLeft: 15}}>
+                                    <Text style={styles.postLabel}> Status: </Text>
+                                    <Text style={styles.postDescription}> {post.status} </Text>
+                                </View>
+
+                                <View className="postTextContainer" style={{flexDirection: 'row', marginLeft: 15}}>
+                                    <Text style={styles.postLabel}> Price: </Text>
+                                    <Text style={styles.postDescription}> {post.value} </Text>
+                                </View>
+
                                 {isAuth ? (
                                     <div className="inputGp"> 
                                         <input value={inputValue} placeholder="Comment..." onChange={(event) => {
@@ -152,9 +171,15 @@ const styles = StyleSheet.create({
         alignSelf: "center"
     },
 
+    postLabel: {
+        fontSize: 14,
+        color: 'gray',
+        fontWeight:800,
+    },
+
     postDescription: {
         fontSize: 14,
-        marginLeft: 15,
+        color: 'gray',
     },
 
     commentBox: {
