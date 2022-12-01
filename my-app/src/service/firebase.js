@@ -3,6 +3,7 @@ import firebase from 'firebase/compat/app';
 import 'firebase/firestore';
 import { getFirestore } from "firebase/firestore";
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -25,3 +26,4 @@ export const otherProject = firebase.initializeApp(otherProjectFirebaseConfig, "
 export const auth = getAuth(otherProject);
 export const db = getFirestore(otherProject);
 export const provider = new GoogleAuthProvider(otherProject);
+export const storage = getStorage(otherProject);

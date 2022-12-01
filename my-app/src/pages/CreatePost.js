@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { addDoc, collection } from "firebase/firestore";
-import { db, auth } from "../service/firebase";
+import { db, auth, storage } from "../service/firebase";
 import CurrencyInput from 'react-currency-input-field';
 import { useNavigate } from "react-router-dom";
 import {View, Text, StyleSheet, Image} from 'react-native';
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { v4 } from "uuid";
 import "../App.css"
 
 function CreatePost({ isAuth }) {
@@ -11,7 +13,8 @@ function CreatePost({ isAuth }) {
     const [postText, setPostText] = useState("");
     const [value, setValue] = useState("");
     const status = "For Sale"
-    const [image, setImage] = useState("")  // FIXME: IDK IF THIS IS RIGHT, also only allows 1 image -emily
+    const [image, setImage] = useState("")  // this is right, thanks ^_^
+    const [imageUrl, setUrl] = useState(""); // image url
     const [errorMsg, setErrorMsg] = useState("")
     const postsCollectionRef = collection(db, "posts"); // add posts to a table in the firestore database named "posts"
 
@@ -22,19 +25,26 @@ function CreatePost({ isAuth }) {
         }
     }, []);
 
-    const user = auth.currentUser;
-    console.log(user);
-
     const createPost = async () => {
         // Make all entries required (FIXME: NOT IMAGE YET)
         if (title == ""|| postText == ""|| value == "") {
             setErrorMsg("ERROR: Please fill in all entries.");
         } else {
+            // get time
             const current = new Date();
             const date = `${current.getMonth()+1}/${current.getDate()}/${current.getFullYear()}`;
             const tmp = new Date();
             const timestamp = tmp.getTime();
 
+            // store image
+            const imageRef = ref(storage, `images/${image.name + v4()}`);
+            uploadBytes(imageRef, image).then((snapshot) => {
+                getDownloadURL(snapshot.ref).then((url) => {
+                    setUrl(url.toString());
+                });
+            });
+            
+            // add document to firestore
             const document = await addDoc(postsCollectionRef, {
                 name: auth.currentUser.displayName, 
                 id: auth.currentUser.uid,
@@ -43,9 +53,13 @@ function CreatePost({ isAuth }) {
                 date, 
                 status,
                 value: `$${value}`,
-                timestamp
+                timestamp,
+                imageUrl
             });
 
+            console.log(imageUrl);
+
+            // create a comment collection for each posts
             const newCollectionRef = collection(db, 'posts', document.id, 'comments');
             await addDoc(newCollectionRef, {
                 tmp: ""
@@ -89,7 +103,7 @@ function CreatePost({ isAuth }) {
                     <View style={{flexDirection: 'row'}}>
 
                         <Text style={styles.labels}> Upload images: </Text> 
-                        <input type="file" style={{margin: 10, marginLeft: 30}} onChange={(event) => {setImage(event.target.value);}} />
+                        <input type="file" style={{margin: 10, marginLeft: 30}} onChange={(event) => {setImage(event.target.files[0]);}} />
 
                     </View> 
 
