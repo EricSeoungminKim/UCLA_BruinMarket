@@ -22,6 +22,9 @@ function CreatePost({ isAuth }) {
         }
     }, []);
 
+    const user = auth.currentUser;
+    console.log(user);
+
     const createPost = async () => {
         // Make all entries required (FIXME: NOT IMAGE YET)
         if (title == ""|| postText == ""|| value == "") {

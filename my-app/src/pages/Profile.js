@@ -15,6 +15,7 @@ function Profile({ isAuth }) {
   const [displayName, setDisplayName] = useState(JSON.parse(localStorage.getItem('displayName')));
   const [email, setEmail] = useState(JSON.parse(localStorage.getItem('email')));
   const [uid, setId] = useState(JSON.parse(localStorage.getItem('uid')));
+  const [url, setUrl] = useState(JSON.parse(localStorage.getItem('url')));
 
   // setting up list to display my posts
   const [postLists, setPostList] = useState([]);
@@ -76,11 +77,15 @@ function Profile({ isAuth }) {
       const data = await getDocs(query(commentsRef, orderBy('timestamp', 'desc'))); // order by newest first
       setCommentList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       // created a list with comments and its data, will implement how to display it later
+      console.log(commentLists);
   };
-
+  console.log(url);
   return (
     <div className="center">
       <div className="profile">
+        <img 
+        src={url}
+        />
         <h1>Profile</h1>
         <p>
           <strong>Name: </strong>

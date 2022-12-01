@@ -14,6 +14,7 @@ function LoginSignup({ setIsAuth }) {
         localStorage.setItem("displayName", JSON.stringify(auth.currentUser.displayName));
         localStorage.setItem("email", JSON.stringify(auth.currentUser.email));
         localStorage.setItem("uid", JSON.stringify(auth.currentUser.uid));
+        localStorage.setItem("url", JSON.stringify(auth.currentUser.photoURL));
         setIsAuth(true);
         navigate("/");
       });

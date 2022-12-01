@@ -10,7 +10,7 @@ function Timeline({ isAuth }) {
     const postsCollectionRef = collection(db, "posts");
     const [comment, setComment] = useState("");
     const [inputValue, setInputValue] = useState("");
-
+    const [commentLists, setCommentList] = useState([]);
 
     useEffect(() => {
         const getPosts = async () => {
@@ -37,11 +37,11 @@ function Timeline({ isAuth }) {
     };
 
     const viewComments = async (id) => {
-        const commentsRef = collection(db, 'posts', id, 'comments');
-        const data = await getDocs(query(commentsRef, orderBy('timestamp', 'desc')));
-        data.forEach((doc) => {
-            console.log(doc.id, " => ", doc.data());
-        });
+      const commentsRef = collection(db, 'posts', id, 'comments');
+      const data = await getDocs(query(commentsRef, orderBy('timestamp', 'desc'))); // order by newest first
+      setCommentList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      // created a list with comments and its data, will implement how to display it later
+      console.log(commentLists);
     };
     
     return (
