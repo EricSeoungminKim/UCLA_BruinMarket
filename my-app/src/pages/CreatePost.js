@@ -58,7 +58,7 @@ function CreatePost({ isAuth }) {
     return (
         <React.Fragment>
             <View>
-                <Text style={styles.title}> Create a Post! </Text>
+                <Text style={styles.title}> Add a Listing! </Text>
             <View style={{flexDirection: 'row', justifyContent: "center", flexShrink: 1}}>
                 <View>
                     <View style={{flexDirection: 'row'}}>
@@ -135,9 +135,9 @@ const styles = StyleSheet.create({
     width: 400,
     height: 30,
     borderRadius: 3,
-    borderColor: '#019FAF',
+    borderColor: '#83bdff',
     borderWidth: 2,
-    backgroundColor: '#019FAF',
+    backgroundColor: '#83bdff',
     opacity: 0.70,
     marginTop: 5
     },

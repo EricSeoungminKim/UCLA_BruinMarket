@@ -53,7 +53,7 @@ function App({ userRepository }) {
             <div className="dropDownMenu">
               <Dropdown title="Account">
                 <Dropdown.Item as={Link} to="/myprofile"> My Profile </Dropdown.Item>
-                <Dropdown.Item as={Link} to="/createpost">Create a Post</Dropdown.Item>
+                <Dropdown.Item as={Link} to="/createpost">Add a Listing</Dropdown.Item>
                 <Dropdown.Item as={Link} to="/wishlist">My Wishlist</Dropdown.Item>
               </Dropdown>
             </div>

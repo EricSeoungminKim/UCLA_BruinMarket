@@ -50,35 +50,35 @@ function Timeline({ isAuth }) {
                 {postLists.map((post) => {
                     return (
                         <View style={{alignItems: "center"}}>
-                    <View className="post" style={styles.post}>
-                        <View className="postHeader" style={styles.postHeader}>
-                            <View className="title" style={styles.title}>
-                                 {post.title}
+                            <View className="post" style={styles.post}>
+                                <View className="postHeader" style={styles.postHeader}>
+                                    <View className="title" style={styles.title}>
+                                        {post.title}
+                                    </View>
+                                </View>
+                                <View style={styles.image}>*INSERT IMAGE HERE*</View>
+                                <View className="postTextContainer" style={styles.postTextContainer}> {post.postText} </View>
+                                <View className="postTextContainer" style={styles.postDescription}> Price: {post.value} </View>
+                                <View className="postTextContainer" style={styles.postDescription}> Posted on: {post.date} </View>
+                                <View className="postTextContainer" style={styles.postDescription}> Seller: {post.name}  </View>
+                                <View className="postTextContainer" style={styles.postDescription}> Status: {post.status} </View>
+                                {isAuth ? (
+                                    <div className="inputGp"> 
+                                        <input value={inputValue} placeholder="Comment..." onChange={(event) => {
+                                            setComment(event.target.value);
+                                            setInputValue(event.target.value);
+                                        }} style={styles.commentBox}/>
+                                        <button onClick={() => {
+                                            addComment(post.id);
+                                            setInputValue("");
+                                        }} style={styles.button}> Post </button>
+                                        <button onClick={() => viewComments(post.id)} style={styles.button}> View Comments </button>
+                                    </div>
+                                ) : (
+                                    ""
+                                )}
                             </View>
                         </View>
-                        <label className="postTextContainer" style={styles.postTextContainer}> {post.postText} </label>
-                        <View style={styles.image}>*INSERT IMAGE HERE*</View>
-                        <View className="postTextContainer" style={styles.postDescription}> Price: {post.value} </View>
-                        <View className="postTextContainer" style={styles.postDescription}> Posted on: {post.date} </View>
-                        <View className="postTextContainer" style={styles.postDescription}> Seller: {post.name}  </View>
-                        <View className="postTextContainer" style={styles.postDescription}> Status: {post.status} </View>
-                        {isAuth ? (
-                            <div className="inputGp"> 
-                                <input value={inputValue} placeholder="Comment..." onChange={(event) => {
-                                    setComment(event.target.value);
-                                    setInputValue(event.target.value);
-                                }}/>
-                                <button onClick={() => {
-                                    addComment(post.id);
-                                    setInputValue("");
-                                }}> Post </button>
-                                <button onClick={() => viewComments(post.id)}> View Comments </button>
-                            </div>
-                        ) : (
-                            ""
-                        )}
-                    </View>
-                    </View>
                     );
                 })}
             </View>
@@ -96,11 +96,13 @@ const styles = StyleSheet.create({
 
     post: {
         flex: 1,
-        width: 500,
+        width: 400,
         margin: 30,
         borderColor: "gray",
         borderRadius: 5,
-        borderWidth: 2
+        borderWidth: 2,
+        shadowColor: "#e5e5e5",
+        shadowRadius: 15
     },
 
     button: {
@@ -117,28 +119,52 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        fontSize: 20,
+        fontSize: 22,
         color: "black",
-        alignSelf: "center"
+        backgroundColor: "#b2d5fd",
+        width: 397,
+        fontFamily: "LoveloBlack",
+        height: 40,
+        alignItems: "center",
+        padding: 8,
+        borderBottomWidth: 2,
+        borderBottomColor: "gray",
     },
 
     postTextContainer: {
-        margin: 10,
-        fontSize: 20
+        marginLeft: 15,
+        marginRight: 15,
+        marginBottom: 15,
+        fontSize: 16,
+        height: 90
     },
 
     image: {
-        margin: 15,
+        marginTop: 15,
+        marginBottom: 15,
         height: 200,
-        width: 200,
+        width: 300,
         borderWidth: 2,
         borderColor: "gray",
         alignSelf: "center"
     },
 
     postDescription: {
-        fontSize: 16,
-        marginLeft: 15
+        fontSize: 14,
+        marginLeft: 15,
+    },
+
+    commentBox: {
+        marginRight: 5,
+        width: 213,
+        marginTop: 10,
+        marginLeft: 3,
+        flexDirection: "column",
+        alignSelf: "baseline",
+    },
+    
+    button: {
+        margin: 5
     }
 })
 
