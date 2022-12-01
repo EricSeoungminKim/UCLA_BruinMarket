@@ -14,7 +14,7 @@ function CreatePost({ isAuth }) {
     const [value, setValue] = useState("");
     const status = "For Sale"
     const [image, setImage] = useState("")  // this is right, thanks ^_^
-    const [imageUrl, setUrl] = useState(""); // image url
+    const [imageUrl, setUrl] = useState("");
     const [errorMsg, setErrorMsg] = useState("")
     const postsCollectionRef = collection(db, "posts"); // add posts to a table in the firestore database named "posts"
 
@@ -36,14 +36,15 @@ function CreatePost({ isAuth }) {
             const tmp = new Date();
             const timestamp = tmp.getTime();
 
-            // store image
-            const imageRef = ref(storage, `images/${image.name + v4()}`);
+            const imageRef = ref(storage, `images/${image.name + v4()}`); // ref to picture
             uploadBytes(imageRef, image).then((snapshot) => {
                 getDownloadURL(snapshot.ref).then((url) => {
-                    setUrl(url.toString());
+                    setUrl(url);
                 });
             });
-            
+
+            console.log(imageUrl);
+
             // add document to firestore
             const document = await addDoc(postsCollectionRef, {
                 name: auth.currentUser.displayName, 
@@ -65,7 +66,7 @@ function CreatePost({ isAuth }) {
                 tmp: ""
             })
             
-            window.location.pathname = "/timeline"
+            //window.location.pathname = "/timeline"
         }
     };
 

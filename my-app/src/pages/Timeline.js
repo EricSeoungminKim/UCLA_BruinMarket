@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { getDocs, collection, query, orderBy, deleteDoc, doc, addDoc } from "firebase/firestore";
 import { Link, renderMatches } from "react-router-dom";
-import { db, auth } from "../service/firebase";
+import { db, auth, storage } from "../service/firebase";
 import { useNavigate } from "react-router-dom";
-import {Text, View, StyleSheet} from 'react-native';
+import { Text, View, StyleSheet, Image } from 'react-native';
+import { ref, getDownloadURL } from "firebase/storage";
 
 function Timeline({ isAuth }) {
     const [postLists, setPostList] = useState([]);
@@ -56,7 +57,9 @@ function Timeline({ isAuth }) {
                                         {post.title}
                                     </View>
                                 </View>
-                                <View style={styles.image}>*INSERT IMAGE HERE*</View>
+                                <View>
+                                    <img src={post.imageUrl} alt="No image" />
+                                </View>
                                 <View className="postTextContainer" style={styles.postTextContainer}> {post.postText} </View>
                                 <View className="postTextContainer" style={styles.postDescription}> Price: {post.value} </View>
                                 <View className="postTextContainer" style={styles.postDescription}> Posted on: {post.date} </View>

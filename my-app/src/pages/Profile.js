@@ -81,7 +81,7 @@ function Profile({ isAuth }) {
       // created a list with comments and its data, will implement how to display it later
       console.log(commentLists);
   };
-  console.log(url);
+
   return (
     
     <React.Fragment>
