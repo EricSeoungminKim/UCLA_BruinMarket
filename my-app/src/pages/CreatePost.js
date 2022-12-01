@@ -80,7 +80,7 @@ function CreatePost({ isAuth }) {
                 window.location.pathname = "/timeline"
             }
             else { 
-                setErrorMsg("Please resubmit.");
+                setErrorMsg("You will be posting to the listings page, available to the public. Press submit to confirm.");
             }
         }
     };
