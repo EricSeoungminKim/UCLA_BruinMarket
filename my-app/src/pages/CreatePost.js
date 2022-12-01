@@ -37,8 +37,8 @@ function CreatePost({ isAuth }) {
             const timestamp = tmp.getTime();
 
             const imageRef = ref(storage, `images/${image.name + v4()}`); // ref to picture
-            uploadBytes(imageRef, image).then((snapshot) => {
-                getDownloadURL(snapshot.ref).then((url) => {
+            uploadBytes(imageRef, image).then((snapshot) => { // upload image
+                getDownloadURL(snapshot.ref).then((url) => { // get image url
                     setUrl(url);
                 });
             });
