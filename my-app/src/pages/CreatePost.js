@@ -7,7 +7,6 @@ import {View, Text, StyleSheet, Image} from 'react-native';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 import "../App.css"
-import { set } from "rsuite/esm/utils/dateUtils";
 
 const numbers = `${v4()}`;
 

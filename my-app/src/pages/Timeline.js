@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { getDocs, collection, query, orderBy, deleteDoc, doc, addDoc } from "firebase/firestore";
-import { Link, renderMatches } from "react-router-dom";
-import { db, auth, storage } from "../service/firebase";
-import { useNavigate } from "react-router-dom";
+import { db } from "../service/firebase";
 import { Text, View, StyleSheet, Image } from 'react-native';
-import { ref, getDownloadURL } from "firebase/storage";
+import Post from "./Post"
 
 function Timeline({ isAuth }) {
     const [postLists, setPostList] = useState([]);
     const postsCollectionRef = collection(db, "posts");
-    const [comment, setComment] = useState("");
-    const [inputValue, setInputValue] = useState("");
-    const [commentLists, setCommentList] = useState([]);
 
     useEffect(() => {
         const getPosts = async () => {
@@ -20,87 +15,24 @@ function Timeline({ isAuth }) {
         };
         getPosts();
     }, []);
-
-    const addComment = async (id) => {
-        const current = new Date();
-        const date = `${current.getMonth()+1}/${current.getDate()}/${current.getFullYear()}`;
-        const tmp = new Date();
-        const timestamp = tmp.getTime();
-
-        const newCollectionRef = collection(db, 'posts', id, 'comments');
-        await addDoc(newCollectionRef, {
-            name: auth.currentUser.displayName, 
-            comment,
-            date, 
-            timestamp
-        })
-        viewComments(id);
-    };
-
-    const viewComments = async (id) => {
-      const commentsRef = collection(db, 'posts', id, 'comments');
-      const data = await getDocs(query(commentsRef, orderBy('timestamp', 'desc'))); // order by newest first
-      setCommentList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      // created a list with comments and its data, will implement how to display it later
-      console.log(commentLists);
-    };
     
     return (
         <React.Fragment>
             <View className="homePage" style={styles.homePage}>
                 {postLists.map((post) => {
                     return (
-                        <View style={{alignItems: "center"}}>
-                            <View className="post" style={styles.post}>
-                                <View className="postHeader" style={styles.postHeader}>
-                                    <View className="title" style={styles.title}>
-                                        {post.title}
-                                    </View>
-                                </View>
-                                <View>
-                                    <img src={post.imageUrl} alt="No image" />
-                                </View>
-
-                                {/* Text describing the post. (title, price, status, seller, date, etc.) */}
-                                <View className="postTextContainer" style={styles.postTextContainer}> {post.postText} </View>
-
-                                <View className="postTextContainer" style={{flexDirection: 'row', marginLeft: 15}}>
-                                    <Text style={styles.postLabel}> Seller: </Text>
-                                    <Text style={styles.postDescription}> {post.name} </Text>
-                                </View>
-
-                                <View className="postTextContainer" style={{flexDirection: 'row', marginLeft: 15}}>
-                                    <Text style={styles.postLabel}> Posted on: </Text>
-                                    <Text style={styles.postDescription}> {post.date} </Text>
-                                </View>
-
-                                <View className="postTextContainer" style={{flexDirection: 'row', marginLeft: 15}}>
-                                    <Text style={styles.postLabel}> Status: </Text>
-                                    <Text style={styles.postDescription}> {post.status} </Text>
-                                </View>
-
-                                <View className="postTextContainer" style={{flexDirection: 'row', marginLeft: 15}}>
-                                    <Text style={styles.postLabel}> Price: </Text>
-                                    <Text style={styles.postDescription}> {post.value} </Text>
-                                </View>
-
-                                {isAuth ? (
-                                    <div className="inputGp"> 
-                                        <input value={inputValue} placeholder="Comment..." onChange={(event) => {
-                                            setComment(event.target.value);
-                                            setInputValue(event.target.value);
-                                        }} style={styles.commentBox}/>
-                                        <button onClick={() => {
-                                            addComment(post.id);
-                                            setInputValue("");
-                                        }} style={styles.button}> Post </button>
-                                        <button onClick={() => viewComments(post.id)} style={styles.button}> View Comments </button>
-                                    </div>
-                                ) : (
-                                    ""
-                                )}
-                            </View>
-                        </View>
+                        <Post 
+                            name={post.name}
+                            id={post.id}
+                            title={post.title}
+                            postText={post.postText}
+                            date={post.date}
+                            status={post.status}
+                            value={post.value}
+                            timestamp={post.timestamp}
+                            imageUrl={post.imageUrl}
+                            isAuth={isAuth}
+                        ></Post>
                     );
                 })}
             </View>
