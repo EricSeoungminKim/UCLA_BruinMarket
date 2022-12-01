@@ -108,9 +108,6 @@ function CreatePost({ isAuth }) {
 
                     </View> 
 
-                    <View>
-                        <Text style={styles.errorMsg}>{errorMsg}</Text>
-                    </View>
                 </View>
 
                 <View>
@@ -121,6 +118,10 @@ function CreatePost({ isAuth }) {
                     <button style={styles.submitButton} onClick={createPost}>
                         <Text style={styles.buttonText}> Submit post! </Text>
                     </button>
+                </View>
+
+                <View>
+                    <Text style={styles.errorMsg}>{errorMsg}</Text>
                 </View>
             </View>
         
