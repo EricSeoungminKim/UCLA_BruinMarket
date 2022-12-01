@@ -9,6 +9,7 @@ import Profile from "./pages/Profile";
 import Timeline from "./pages/Timeline";
 import CreatePost from "./pages/CreatePost";
 import Search from "./pages/Search";
+import Wishlist from "./pages/Wishlist"
 
 import logo from "./images/BruinMarketplaceLogo.png";
 import Dropdown from "rsuite/Dropdown";
@@ -53,6 +54,7 @@ function App({ userRepository }) {
               <Dropdown title="Account">
                 <Dropdown.Item as={Link} to="/myprofile"> My Profile </Dropdown.Item>
                 <Dropdown.Item as={Link} to="/createpost">Create a Post</Dropdown.Item>
+                <Dropdown.Item as={Link} to="/wishlist">My Wishlist</Dropdown.Item>
               </Dropdown>
             </div>
           ) : (
@@ -77,6 +79,7 @@ function App({ userRepository }) {
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/myprofile" element={<Profile isAuth={isAuth}/>} />
         <Route path="/search" element={<Search />} />
+        <Route path="/wishlist" element={<Wishlist />} />
       </Routes>
     </BrowserRouter>
   );
