@@ -3,6 +3,7 @@ import { db, auth } from "../service/firebase";
 import { collection, query, where, getDocs, updateDoc, doc, deleteDoc, orderBy, addDoc } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
 import { Image, View, Text, StyleSheet} from 'react-native';
+import { AuthErrorCodes } from "firebase/auth";
 
 
 function Profile({ isAuth }) {
@@ -89,7 +90,7 @@ function Profile({ isAuth }) {
       {/* TOP SECTION: Profile info: image, 'welcome' message, name, email, & intro. */}
       <View style={{flexDirection: 'row'}}>
         <View style={{flex:1}}>
-          <Image style={{margin: 10, borderRadius: 150, width: 300, height: 300, alignSelf: 'center'}} source={url} />
+          <Image style={styles.profilePic} source={url} />
         </View>
         
         <View style={{flex:3}}>
@@ -111,94 +112,91 @@ function Profile({ isAuth }) {
 
 
       {/* MIDDLE SECTION: (after profile info, before product info) */}
-      <View>
-        <Text style={styles.bigTitle}> My Listings: </Text>
+      <View style={{flexDirection: "row", alignItems: 'center'}}>
+        <View style={{flex: 1}}>
+          <Text style={styles.bigTitle}> My Listings: </Text>
+        </View>
+
+        <View style={{flex: 2}}>
+          <Link to="/CreatePost">
+            <button style={styles.newPostButton}>
+                <Text style={styles.newPostButtonText}> Create a new listing! </Text>
+            </button>
+          </Link>
+        </View>
       </View>
 
-      <Link to="/CreatePost" style={{alignSelf: 'center'}}>
-        <button style={styles.postButton}>
-            <Text style={{fontFamily: 'LoveloBlack', fontWeight: 800, color: 'white'}}> Create a new listing! </Text>
-        </button>
-      </Link>
-
       {/* BOTTOM SECTION: */}
-      <View style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center'}}>
+      <View style={styles.postsGrid}>
         {postLists.map((post) => {
           return (
             
             <View>
+              <View style={{margin: 30}}> 
               {/*Everything inside this view tag is the structure of one product card.*/}
 
-              <View style={{margin: 50}}>    
-                <View style={{padding: 10, width: 350, height: 550, borderWidth: 2, borderColor: '#019FAF', borderRadius: 5}}>
+                <View style={styles.post}>
 
-                {/* TITLE */}
+                  {/* TITLE */}
+                    <View style={{padding: 5}}>
+                      <Text style={styles.itemTitle}>{post.title} </Text>
+                    </View>
+
+                  {/* ------DELETE POST BUTTON------ */}
+                  <button onClick={() => deleteDoc(post.id)} style={styles.deleteButton}> X </button>
+
+                  {/* DATE POSTED */}
                   <View style={{padding: 5, flexDirection: 'row'}}>
-                    <Text style={{fontWeight: 800}}> Title: </Text>
-                    <Text>{post.title} </Text>
+                    <Text style={styles.boldSubtitle}> Posted on: </Text>
+                    <Text style={styles.itemText}>{post.date} </Text>
                   </View>
 
-                {/* DATE POSTED */}
-                  <View style={{padding: 5, flexDirection: 'row'}}>
-                    <Text style={{fontWeight: 800}}> Date Posted: </Text>
-                    <Text>{post.date} </Text>
-                  </View>
+                  {/* PRODUCT IMAGE */}
+                  <Image style={styles.productImage} source={require('../images/chair.jpg')} />
 
-                {/* PRODUCT IMAGE */}
-                  <Text>    </Text>
-                    <Image style={{alignSelf: 'center', width: 300, height: 300}} source={require('../images/chair.jpg')} />
-                  <Text>    </Text>
+                  {/* STATUS BUTTON: FOR SALE/SOLD */}
+                    <View style={{padding: 5, flexDirection: 'row', alignItems: 'center'}}>
+                      <Text style={styles.boldSubtitle}> Status:   </Text>
+                      <button style={styles.statusButton} onClick={() => changeStatus(post.id, post.status)}>
+                        <Text style={styles.statusButtonText}> {post.status} </Text>
+                      </button>
+                    </View>
 
-                {/* STATUS BUTTON: FOR SALE/SOLD */}
-                  <View style={{padding: 5, flexDirection: 'row'}}>
-                    <Text style={{marginTop: 8, fontWeight: 800}}> Status:   </Text>
-                    <button style={styles.statusButton} onClick={() => changeStatus(post.id, post.status)}>
-                      <Text style={{fontFamily: 'LoveloBlack', fontWeight: 800, color: 'white'}}> {post.status} </Text>
-                    </button>
-                  </View>
+                  {/* PRICE */}
+                    <View style={{padding: 5, flexDirection: 'row'}}>
+                      <Text style={styles.boldSubtitle}> Price: </Text>
+                      <Text style={styles.itemText}>{post.value} </Text> 
+                    </View>
 
-                {/* PRICE */}
-                  <View style={{padding: 5, flexDirection: 'row'}}>
-                    <Text style={{fontWeight: 800}}> Price: </Text>
-                    <Text>{post.value} </Text> 
-                  </View>
-
-                {/* DESCRIPTION */}
-                  <View style={{padding: 5}}>
-                    <Text style={{fontWeight: 800}}> Description: </Text>
-                    <Text style={{marginLeft: 5, marginTop: 5}}>{post.postText} </Text>
-                  </View>
-
-                {/* DELETE POST BUTTON */}
-                  <button onClick={() => deleteDoc(post.id)}> Delete Post </button>
-                </View>
-
-
-                {/* Below is for the implementation for INPUT BOX and VIEW COMMENTS BUTTON. */}
-                <input value={inputValue} placeholder="Comment..." onChange={(event) => {
-                        setComment(event.target.value);
-                        setInputValue(event.target.value);
-                    }}/>
+                  {/* DESCRIPTION */}
+                    <View style={{padding: 5}}>
+                      <Text style={styles.boldSubtitle}> Description: </Text>
+                      <Text style={styles.postDescription}>{post.postText} </Text>
+                    </View>
+                  
+                  {/* ------Below is for the implementation for INPUT BOX and VIEW COMMENTS BUTTON.------ */}
+                  <View style={styles.commentSection}>
+                    <input value={inputValue} placeholder="Comment..." onChange={(event) => {
+                            setComment(event.target.value);
+                            setInputValue(event.target.value);
+                        }} style={styles.commentBox}/>
                     <button onClick={() => {
                         addComment(post.id);
                         setInputValue("");
-                    }}> Post </button>
-                    <button onClick={() => viewComments(post.id)}> View Comments </button>
-
+                    }} style={styles.postCommentButton}> Post </button>
+                    <button onClick={() => viewComments(post.id)} style={styles.viewCommentsButton}> View Comments </button>
+                  </View>
+                </View>
               
               </View>
-              
             </View>
           );
         })}
       
       </View>
-      
+
       
     </React.Fragment>
-
-
-
     
   );
 }
@@ -207,11 +205,11 @@ function Profile({ isAuth }) {
 const styles=StyleSheet.create({
 
   bigTitle:{
-    marginTop: 25,
-    fontSize: 70,
+    fontSize: 60,
     fontWeight: 500,
-    marginLeft: 20,
-    fontFamily: 'LoveloBlack',
+    margin: 20,
+    marginTop: 60,
+    fontFamily: "LoveloBlack"
   },
 
   bioInfo:{
@@ -220,6 +218,16 @@ const styles=StyleSheet.create({
     marginLeft: 20,
     padding: 10,
     //fontFamily: 'LoveloBlack',
+  },
+
+  profilePic: {
+    margin: 10,
+    marginTop: 40,
+    marginLeft: 20,
+    borderRadius:150,
+    width: 300,
+    height: 300,
+    alignSelf: 'center'
   },
 
   stars:{
@@ -239,25 +247,131 @@ const styles=StyleSheet.create({
     padding: 5,
   },
 
-  postButton:{
+  newPostButton:{
     width: 400,
-    height: 30,
+    height: 50,
     borderRadius: 3,
-    borderColor: '#019FAF',
+    borderColor: '#83bdff',
     borderWidth: 2,
-    backgroundColor: '#019FAF',
+    backgroundColor: '#83bdff',
     opacity: 0.70,
+    marginLeft: 490,
+    marginTop: 20
+  },
+
+  newPostButtonText: {
+    fontFamily: 'LoveloBlack',
+    fontWeight: 800,
+    color: 'white',
+    fontSize: 20
+  },
+
+  postsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-evenly',
+    alignContent: 'flex-start'
+  },
+
+  post: {
+    width: 400,
+    borderWidth: 2,
+    borderColor: 'gray',
+    borderRadius: 5,
+  },
+
+  itemTitle: {
+    fontSize: 22,
+    color: "black",
+    backgroundColor: "#b2d5fd",
+    width: 396,
+    fontFamily: "LoveloBlack",
+    height: 40,
+    alignSelf: "center",
+    textAlign: "center",
+    padding: 8,
+    marginTop: -5,
+    borderBottomWidth: 2,
+    borderBottomColor: "gray",
+    marginBottom: 5
+  },
+
+  deleteButton: {
+    marginTop: -46,
+    zIndex: 2,
+    width: 30,
+    height: 30,
+    color: "#b53737",
+    fontSize: 20,
+    borderWidth: 1.5,
+    borderColor: "gray",
+    marginLeft: 360,
+    marginBottom: 15,
+    borderRadius: 5
+  },
+
+  boldSubtitle: {
+    fontWeight: 750,
+    marginLeft: 10,
+    fontSize: 16
+  },
+
+  itemText: {
+    fontSize: 16
+  },
+
+  productImage: {
+    alignSelf: 'center',
+    marginTop: 15,
+    marginBottom: 15,
+    height: 200,
+    width: 300,
+    resizeMode: "contain"
   },
 
   statusButton:{
     width: 100,
     height: 30,
     borderRadius: 3,
-    borderColor: '#019FAF',
+    borderColor: '#b2d5fd',
     borderWidth: 2,
-    backgroundColor: '#019FAF',
-    opacity: 0.70,
+    backgroundColor: '#b2d5fd'
+  },
+
+  statusButtonText: {
+    fontFamily: 'LoveloBlack',
+    fontWeight: 800, color: 'white'
+  },
+
+  postDescription: {
+    fontSize: 16,
+    marginLeft: 15,
+    marginRight: 15,
+    marginTop: 8,
     marginBottom: 10,
+    height: 80
+  },
+
+  commentSection: {
+    flexDirection: "row",
+    marginBottom: 3
+  },
+
+  commentBox: {
+    marginRight: 5,
+    width: 213,
+    marginLeft: 3,
+    flexDirection: "column",
+    alignSelf: "baseline",
+  },
+
+  postCommentButton: {
+    width: 50,
+    marginRight: 5
+  },
+
+  viewCommentsButton: {
+    width: 116
   }
 
 })
