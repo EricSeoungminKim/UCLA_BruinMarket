@@ -7,6 +7,9 @@ import {View, Text, StyleSheet, Image} from 'react-native';
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 import "../App.css"
+import { set } from "rsuite/esm/utils/dateUtils";
+
+const numbers = `${v4()}`;
 
 function CreatePost({ isAuth }) {
     const [title, setTitle] = useState(""); // save what user is typing in the textbox
@@ -16,6 +19,7 @@ function CreatePost({ isAuth }) {
     const [image, setImage] = useState("")  // this is right, thanks ^_^
     const [imageUrl, setUrl] = useState("");
     const [errorMsg, setErrorMsg] = useState("")
+
     const postsCollectionRef = collection(db, "posts"); // add posts to a table in the firestore database named "posts"
 
     let navigate = useNavigate();
@@ -24,6 +28,13 @@ function CreatePost({ isAuth }) {
             navigate("/login"); 
         }
     }, []);
+
+    const addImage = (image) => {
+        const imageRef = ref(storage, `images/${image.name}${numbers}`);
+        uploadBytes(imageRef, image).then((snapshot) => { // upload image
+            console.log("Uploaded image")
+        })
+    }
 
     const createPost = async () => {
         // Make all entries required (FIXME: NOT IMAGE YET)
@@ -35,38 +46,42 @@ function CreatePost({ isAuth }) {
             const date = `${current.getMonth()+1}/${current.getDate()}/${current.getFullYear()}`;
             const tmp = new Date();
             const timestamp = tmp.getTime();
-
-            const imageRef = ref(storage, `images/${image.name + v4()}`); // ref to picture
-            uploadBytes(imageRef, image).then((snapshot) => { // upload image
-                getDownloadURL(snapshot.ref).then((url) => { // get image url
-                    setUrl(url);
-                });
-            });
-
-            console.log(imageUrl);
-
-            // add document to firestore
-            const document = await addDoc(postsCollectionRef, {
-                name: auth.currentUser.displayName, 
-                id: auth.currentUser.uid,
-                title, 
-                postText,
-                date, 
-                status,
-                value: `$${value}`,
-                timestamp,
-                imageUrl
-            });
-
-            console.log(imageUrl);
-
-            // create a comment collection for each posts
-            const newCollectionRef = collection(db, 'posts', document.id, 'comments');
-            await addDoc(newCollectionRef, {
-                tmp: ""
-            })
             
-            //window.location.pathname = "/timeline"
+            console.log(numbers);
+            const imageRef = ref(storage, `images/${image.name}${numbers}`); // ref to picture
+
+            await getDownloadURL(imageRef).then((url) => { // get image URL
+                setUrl(url);
+            })
+
+            console.log(imageUrl);
+
+            if (imageUrl != "") {
+                // add document to firestore
+                const document = await addDoc(postsCollectionRef, {
+                    name: auth.currentUser.displayName, 
+                    id: auth.currentUser.uid,
+                    title, 
+                    postText,
+                    date, 
+                    status,
+                    value: `$${value}`,
+                    timestamp,
+                    imageUrl
+                });
+
+                console.log(imageUrl);
+
+                // create a comment collection for each posts
+                const newCollectionRef = collection(db, 'posts', document.id, 'comments');
+                await addDoc(newCollectionRef, {
+                    tmp: ""
+                })
+                window.location.pathname = "/timeline"
+            }
+            else { 
+                setErrorMsg("Please resubmit.");
+            }
         }
     };
 
@@ -104,7 +119,7 @@ function CreatePost({ isAuth }) {
                     <View style={{flexDirection: 'row'}}>
 
                         <Text style={styles.labels}> Upload images: </Text> 
-                        <input type="file" style={{margin: 10, marginLeft: 30}} onChange={(event) => {setImage(event.target.files[0]);}} />
+                        <input type="file" style={{margin: 10, marginLeft: 30}} onChange={(event) => {setImage(event.target.files[0]); addImage(event.target.files[0])}} />
 
                     </View> 
 
