@@ -92,12 +92,12 @@ function CreatePost({ isAuth }) {
                 <View>
                     <View style={{flexDirection: 'row'}}>
                         <Text style={styles.labels}> Title:                        </Text>
-                        <input style={{width: 750, height: 30, margin: 10}} placeholder="Enter a title for your product here." onChange={(event) => {setTitle(event.target.value);}} />
+                        <input style={{width: 750, height: 30, margin: 10}} placeholder="Enter a title for your product..." onChange={(event) => {setTitle(event.target.value);}} />
                     </View>
 
                     <View style={{flexDirection: 'row'}}>
                         <Text style={styles.labels}> Description:           </Text>
-                        <textarea style={{width: 750, height: 200, margin: 10}} placeholder="Describe your product here." onChange={(event) => {setPostText(event.target.value);}}/>
+                        <textarea style={{width: 750, height: 200, margin: 10}} placeholder="Describe your product..." onChange={(event) => {setPostText(event.target.value);}}/>
                     </View>
 
                     <View style={{flexDirection: 'row'}}>
@@ -130,7 +130,7 @@ function CreatePost({ isAuth }) {
             </View>
                 <View style={{alignSelf: 'center'}}>
                     <button style={styles.submitButton} onClick={createPost}>
-                        <Text style={styles.buttonText}> Submit post! </Text>
+                        <Text style={styles.buttonText}> Submit </Text>
                     </button>
                 </View>
 
