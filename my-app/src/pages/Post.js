@@ -7,7 +7,6 @@ function Post({ name, id, title, postText, date, status, value, timestamp, image
     const [comment, setComment] = useState("");
     const [inputValue, setInputValue] = useState("");
     const [commentLists, setCommentList] = useState([]);
-    const [flag, setFlag] = useState(false);
     
     const postComment = async (id) => {
         const current = new Date();
@@ -90,10 +89,15 @@ function Post({ name, id, title, postText, date, status, value, timestamp, image
                             postComment(id);
                             setInputValue("");
                         }} style={styles.button}> Post </button>
-                        <button onClick={() => {
-                            loadComments(id);
-                            setFlag = true;
-                        }} style={styles.button}> Load Comments </button>
+                        
+                        <div>
+                            <button onClick={() => {
+                                loadComments(id);
+                            }} style={styles.button}> Load Comments </button>
+                            <button onClick={() => {
+                                setCommentList([]);
+                            }} style={styles.button}> Hide Comments </button>
+                        </div>
                     </div>
                 ) : (
                     ""
