@@ -43,10 +43,7 @@ function App({ userRepository }) {
             About Us
           </NavLink>
           <NavLink to="/search" className="linkmenuItem">
-            Search
-          </NavLink>
-          <NavLink to="/timeline" className="linkmenuItem">
-            Listings
+            Search Listings
           </NavLink>
 
           {isAuth ? (
