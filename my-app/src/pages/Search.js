@@ -94,7 +94,7 @@ function Search({ isAuth }) {
         <input
           style={searchBarStyle}
           value={inputValue}
-          placeholder="Search posts..."
+          placeholder="Search listings..."
           onChange={(event) => {
             setInputValue(event.target.value);
           }}
