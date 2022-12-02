@@ -24,7 +24,7 @@ function CreatePost({ isAuth }) {
     let navigate = useNavigate();
     useEffect (() => { // cannot create a post if not logged in
         if (!isAuth) {
-            navigate("/login"); 
+            console.log("Hello");
         }
     }, []);
 

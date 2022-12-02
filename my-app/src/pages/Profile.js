@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { Image, View, Text, StyleSheet} from 'react-native';
 import Post from "./Post"
 
-
 function Profile({ isAuth }) {
   let navigate = useNavigate();
   useEffect (() => { // cannot create a post if not logged in
@@ -47,11 +46,9 @@ function Profile({ isAuth }) {
     window.location.reload(false); // reload to view changes
   };
 
-  const deleteDoc = async (id) => {
-    console.log("Delete");
-    // I will implement this later
-    //await deleteDoc(doc(db, "posts", id));
-    //window.location.reload(false);
+  const deletePost = async (id) => {
+    await deleteDoc(doc(db, "posts", id));
+    window.location.reload(false);
   };
 
   return (
@@ -97,7 +94,8 @@ function Profile({ isAuth }) {
       <View className="homePage" style={styles.homePage}>
           {postLists.map((post) => {
               return (
-                  <Post 
+                  <div>
+                    <Post 
                       name={post.name}
                       id={post.id}
                       title={post.title}
@@ -108,11 +106,13 @@ function Profile({ isAuth }) {
                       timestamp={post.timestamp}
                       imageUrl={post.imageUrl}
                       isAuth={isAuth}
-                  ></Post>
+                    ></Post>
+                    <button onClick={() => deletePost(post.id)}> Delete post </button>
+                    <button onClick={() => changeStatus(post.id, post.status)}> Change status </button>
+                  </div>
               );
           })}
       </View>
-      
       
     </React.Fragment>
 
