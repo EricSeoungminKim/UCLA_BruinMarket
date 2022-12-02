@@ -78,7 +78,7 @@ function App({ userRepository }) {
         <Route path="/timeline" element={<Timeline isAuth={isAuth}/>} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/myprofile" element={<Profile isAuth={isAuth}/>} />
-        <Route path="/search" element={<Search />} />
+        <Route path="/search" element={<Search isAuth={isAuth}/>} />
         <Route path="/wishlist" element={<Wishlist />} />
       </Routes>
     </BrowserRouter>
