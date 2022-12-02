@@ -31,17 +31,31 @@ function Profile({ isAuth }) {
     getPosts();
   }, []);
 
+  /*const statusButtonText = ''
+  const changeStatusButtonText = (status) =>{
+    if (status === "For Sale"){
+      statusButtonText = 'MARK AS SOLD!'
+    }
+    else{
+      statusButtonText = 'MARK FOR SALE!'
+    }
+  }*/
+
+  //const [statusButtonText, setStatusButtonText] = useState('HELLO');
+
   const changeStatus = async (id, status) => { 
     const docRef = doc(db, "posts", id); // fetch doc
-    if(status == "For Sale") { // check status of doc
+    if(status === "For Sale") { // check status of doc
       await updateDoc(docRef, {
         status: "SOLD!" // change status
       });
+      //setStatusButtonText('MARK FOR SALE!')
     }
     else {
       await updateDoc(docRef, {
         status: "For Sale"
       });
+      //setStatusButtonText('MARK AS SOLD!')
     }
     window.location.reload(false); // reload to view changes
   };
@@ -58,7 +72,7 @@ function Profile({ isAuth }) {
       {/* TOP SECTION: Profile info: image, 'welcome' message, name, email, & intro. */}
       <View style={{flexDirection: 'row'}}>
         <View style={{flex:1}}>
-          <Image style={{margin: 10, borderRadius: 150, width: 300, height: 300, alignSelf: 'center'}} source={url} />
+          <Image style={styles.profilePic} source={url} />
         </View>
         
         <View style={{flex:3}}>
@@ -80,21 +94,26 @@ function Profile({ isAuth }) {
 
 
       {/* MIDDLE SECTION: (after profile info, before product info) */}
-      <View>
-        <Text style={styles.bigTitle}> My Listings: </Text>
+      <View style={{flexDirection: "row", alignItems: 'center'}}>
+        <View style={{flex: 1}}>
+          <Text style={styles.bigTitle}> My Listings: </Text>
+        </View>
+
+        <View style={{flex: 2}}>
+          <Link to="/CreatePost">
+            <button style={styles.newPostButton}>
+                <Text style={styles.newPostButtonText}> Create a new listing! </Text>
+            </button>
+          </Link>
+        </View>
       </View>
 
-      <Link to="/CreatePost" style={{alignSelf: 'center'}}>
-        <button style={styles.postButton}>
-            <Text style={{fontFamily: 'LoveloBlack', fontWeight: 800, color: 'white'}}> Create a new listing! </Text>
-        </button>
-      </Link>
-
       {/* BOTTOM SECTION: */}
-      <View className="homePage" style={styles.homePage}>
+      <View style={styles.postsGrid}>
           {postLists.map((post) => {
               return (
-                  <div>
+                <View>
+                  <View style={{flexDirection: 'row'}}>
                     <Post 
                       name={post.name}
                       id={post.id}
@@ -107,77 +126,131 @@ function Profile({ isAuth }) {
                       imageUrl={post.imageUrl}
                       isAuth={isAuth}
                     ></Post>
-                    <button onClick={() => deletePost(post.id)}> Delete post </button>
-                    <button onClick={() => changeStatus(post.id, post.status)}> Change status </button>
-                  </div>
+                    <button style={styles.deleteButton} onClick={() => deletePost(post.id)}> X </button>
+                 </View>
+
+                 <View style={styles.statusButtonPosition}>
+                  <button style={styles.statusButton} onClick={() => changeStatus(post.id, post.status)}> CHANGE STATUS! </button>
+                 </View>
+              </View>
               );
           })}
       </View>
       
     </React.Fragment>
-
-
-
-    
   );
 }
 
+/*<Text style={styles.statusButtonText}> M A R K                               </Text>
+                      <Text> </Text>
+                      <Text style={styles.statusButtonText}> A S                                   </Text>
+                      <Text> </Text>
+                      <Text style={styles.statusButtonText}> S O L D ! </Text> 
+*/
 
 const styles=StyleSheet.create({
 
   bigTitle:{
-    marginTop: 25,
-    fontSize: 70,
+    fontSize: 60,
     fontWeight: 500,
-    marginLeft: 20,
-    fontFamily: 'LoveloBlack',
+    margin: 20,
+    marginTop: 60,
+    fontFamily: "LoveloBlack"
   },
 
   bioInfo:{
-    fontSize: 40,
+    fontSize: 30,
     fontWeight: 500,
-    marginLeft: 20,
+    marginLeft: 30,
     padding: 10,
     //fontFamily: 'LoveloBlack',
   },
 
-  stars:{
-    width: 30,
-    height: 30,
-    padding: 2,
+  profilePic: {
+    margin: 10,
+    marginTop: 40,
+    marginLeft: 20,
+    borderRadius:150,
+    width: 300,
+    height: 300,
+    alignSelf: 'center'
   },
 
-  dot:{
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    backgroundColor: "white",
-    borderColor: "black",
-    borderWidth: 2,
-    alignSelf: 'center',
-    padding: 5,
-  },
-
-  postButton:{
+  newPostButton:{
     width: 400,
-    height: 30,
+    height: 50,
     borderRadius: 3,
-    borderColor: '#019FAF',
+    borderColor: '#83bdff',
     borderWidth: 2,
-    backgroundColor: '#019FAF',
+    backgroundColor: '#83bdff',
     opacity: 0.70,
+    marginLeft: 490,
+    marginTop: 20
+  },
+
+  newPostButtonText: {
+    fontFamily: 'LoveloBlack',
+    fontWeight: 800,
+    color: 'white',
+    fontSize: 20
+  },
+
+  postsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-evenly',
+    alignContent: 'flex-start'
+  },
+
+  deleteButton: {
+    marginTop: 36,
+    marginLeft: -70,
+    zIndex: 1,
+    width: 30,
+    height: 30,
+    color: "#b53737",
+    fontFamily: 'LoveloBlack',
+    fontSize: 20,
+    borderWidth: 1.5,
+    borderColor: "gray",
+    borderRadius: 5,
   },
 
   statusButton:{
-    width: 100,
-    height: 30,
+    //width: 30,
+    //height: 300,
+    width: 394,
+    height: 40,
     borderRadius: 3,
-    borderColor: '#019FAF',
+    borderColor: '#FDEFB2',
     borderWidth: 2,
-    backgroundColor: '#019FAF',
-    opacity: 0.70,
-    marginBottom: 10,
-  }
+    backgroundColor: '#FDEFB2',
+    fontFamily: 'LoveloBlack',
+    fontWeight: 800,
+    //color: 'white',
+    //alignSelf: 'center',
+    //marginTop: 70,
+    //marginLeft: 10,
+    zIndex: 1,
+    //marginTop: -30,
+    //marginLeft: 31,
+  },
+
+  statusButtonText: {
+    fontFamily: 'LoveloBlack',
+    fontWeight: 800,
+    color: 'black',
+  },
+
+  statusButtonPosition: {
+    borderWidth: 3,
+    width: 400,
+    height: 40,
+    marginLeft: 30,
+    marginTop: -30,
+    borderRadius: 6,
+    borderColor: "white",
+  },
 
 })
 
