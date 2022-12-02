@@ -41,7 +41,7 @@ function Post({ name, id, title, postText, date, status, value, timestamp, image
                     </View>
                 </View>
                 <View>
-                    <img src={imageUrl} alt="No image" />
+                    <Image source={imageUrl} alt="No image" style={styles.image}/>
                 </View>
 
                 {/* Text describing the post. (title, price, status, seller, date, etc.) */}
@@ -69,14 +69,15 @@ function Post({ name, id, title, postText, date, status, value, timestamp, image
                 {/* COMMENTS DISPLAY IMPLEMENTATION */}
                 {commentLists.map((comment) => {
                     return (
-                        <div>
-                            <div>
-                                <text> {comment.comment} </text>
-                            </div>
-                            <div>
-                                <text> @{comment.name} {comment.date} </text>
-                            </div>
-                        </div>
+                        <View style={styles.commentSection}>
+                            <View style={styles.singleComment}>
+                                <Text style={styles.commenter}> {comment.name}: </Text>
+                                <Text style={styles.commentText}> {comment.comment} </Text>
+                            </View>
+                            <View>
+                                <Text style={styles.commentDate}> {comment.date} </Text>
+                            </View>
+                        </View>
                     );
                 })}
                 {isAuth ? (
@@ -118,6 +119,7 @@ const styles = StyleSheet.create({
     post: {
         flex: 1,
         width: 400,
+        height: "100%",
         margin: 30,
         borderColor: "gray",
         borderRadius: 5,
@@ -165,9 +167,8 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         height: 200,
         width: 300,
-        borderWidth: 2,
-        borderColor: "gray",
-        alignSelf: "center"
+        alignSelf: "center",
+        resizeMode: "contain"
     },
 
     postLabel: {
@@ -192,6 +193,34 @@ const styles = StyleSheet.create({
     
     button: {
         margin: 5
+    },
+
+    commentSection: {
+        borderRadius: 2,
+        borderColor: "black",
+        margin: 7
+    },
+
+    singleComment: {
+        borderRadius: 1,
+        flexDirection: "row"
+    },
+
+    commenter: {
+    flex: 1,
+    marginLeft: 15,
+    fontWeight: 600,
+    },
+
+    commentText: {
+        flex: 2,
+        marginRight: 5
+    },
+
+    commentDate: {
+    marginLeft: 30,
+    marginRight: 30,
+    color: "gray"
     }
 })
 
