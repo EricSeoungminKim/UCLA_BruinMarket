@@ -15,7 +15,7 @@ function CreatePost({ isAuth }) {
     const [postText, setPostText] = useState("");
     const [value, setValue] = useState("");
     const status = "For Sale"
-    const [image, setImage] = useState("")  // this is right, thanks ^_^
+    const [image, setImage] = useState("")
     const [imageUrl, setUrl] = useState("");
     const [errorMsg, setErrorMsg] = useState("")
 
@@ -36,8 +36,8 @@ function CreatePost({ isAuth }) {
     }
 
     const createPost = async () => {
-        // Make all entries required (FIXME: NOT IMAGE YET)
-        if (title == ""|| postText == ""|| value == "") {
+        // Make all entries required
+        if (title == ""|| postText == ""|| value == "" || image == "") {
             setErrorMsg("ERROR: Please fill in all entries.");
         } else {
             // get time
@@ -130,7 +130,7 @@ function CreatePost({ isAuth }) {
             </View>
                 <View style={{alignSelf: 'center'}}>
                     <button style={styles.submitButton} onClick={createPost}>
-                        <Text style={styles.buttonText}> Submit </Text>
+                        <Text style={styles.buttonText}> Submit! </Text>
                     </button>
                 </View>
 

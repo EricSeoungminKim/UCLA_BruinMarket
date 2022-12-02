@@ -63,31 +63,34 @@ function Search({ isAuth }) {
 
   const searchBarStyle = {
     color: "black",
-    backgroundColor: "LemonChiffon",
+    backgroundColor: "#eeeeee",
     padding: "20px",
     border: "none",
     fontSize: 18,
-    marginLeft: 675,
-    marginTop: 50,
-    marginBottom: 50,
-    fontFamily: "Arial",
+    marginBottom: 10,
+    fontFamily: "LoveloBlack",
     borderBottomLeftRadius: "30px",
     borderTopLeftRadius: "30px",
+    height: 20,
+    marginTop: 30
   };
   const buttonStyle = {
     color: "black",
     fontSize: 18,
-    padding: "20px",
     border: "none",
-    backgroundColor: "khaki",
-    fontFamily: "Arial",
+    backgroundColor: "lightgray",
+    fontFamily: "LoveloBlack",
     borderBottomRightRadius: "30px",
     borderTopRightRadius: "30px",
+    height: 40,
+    width: 90,
+    marginTop: 30,
+    alignContents: "center",
   };
 
   return (
     <React.Fragment>
-      <div>
+      <View style={{flexDirection: "row", justifyContent: "flex-start", marginLeft: 55}}>
         <input
           style={searchBarStyle}
           value={inputValue}
@@ -105,28 +108,38 @@ function Search({ isAuth }) {
           {" "}
           Search{" "}
         </button>
-      </div>
-      <div>
-        {postLists.map((post) => {
-          return (
-            <Match
-              name={post.name}
-              id={post.id}
-              title={post.title}
-              postText={post.postText}
-              date={post.date}
-              status={post.status}
-              value={post.value}
-              timestamp={post.timestamp}
-              imageUrl={post.imageUrl}
-              isAuth={isAuth}
-              searchValue={searchValue}
-            ></Match>
-          );
-        })}
-      </div>
+      </View>
+      <View>
+        <View className="homePage" style={styles.homePage}>
+          {postLists.map((post) => {
+            return (
+              <Match
+                name={post.name}
+                id={post.id}
+                title={post.title}
+                postText={post.postText}
+                date={post.date}
+                status={post.status}
+                value={post.value}
+                timestamp={post.timestamp}
+                imageUrl={post.imageUrl}
+                isAuth={isAuth}
+                searchValue={searchValue}
+              ></Match>
+            );
+          })}
+          </View>
+      </View>
     </React.Fragment>
   );
 }
+
+const styles = StyleSheet.create({
+  homePage: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      justifyContent: "center"
+  },
+})
 
 export default Search;

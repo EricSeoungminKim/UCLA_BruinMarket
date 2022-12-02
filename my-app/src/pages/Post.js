@@ -33,6 +33,7 @@ function Post({ name, id, title, postText, date, status, value, timestamp, image
     loadComments();
     
     return (
+        <View>
         <View style={{alignItems: "center"}}>
             <View className="post" style={styles.post}>
                 <View className="postHeader" style={styles.postHeader}>
@@ -46,36 +47,41 @@ function Post({ name, id, title, postText, date, status, value, timestamp, image
 
                 {/* Text describing the post. (title, price, status, seller, date, etc.) */}
                 <View className="postTextContainer" style={styles.postTextContainer}> {postText} </View>
+                <View style={{marginBottom: 15}}> {/*EDIT LATER???*/}
+                    <View>
+                        <View className="postTextContainer" style={{flexDirection: 'row', marginLeft: 15}}>
+                            <Text style={styles.postLabel}> Seller: </Text>
+                            <Text style={styles.postDescription}> {name} </Text>
+                        </View>
 
-                <View className="postTextContainer" style={{flexDirection: 'row', marginLeft: 15}}>
-                    <Text style={styles.postLabel}> Seller: </Text>
-                    <Text style={styles.postDescription}> {name} </Text>
-                </View>
+                        <View className="postTextContainer" style={{flexDirection: 'row', marginLeft: 15}}>
+                            <Text style={styles.postLabel}> Posted on: </Text>
+                            <Text style={styles.postDescription}> {date} </Text>
+                        </View>
 
-                <View className="postTextContainer" style={{flexDirection: 'row', marginLeft: 15}}>
-                    <Text style={styles.postLabel}> Posted on: </Text>
-                    <Text style={styles.postDescription}> {date} </Text>
-                </View>
+                        <View className="postTextContainer" style={{flexDirection: 'row', marginLeft: 15}}>
+                            <Text style={styles.postLabel}> Status: </Text>
+                            <Text style={styles.postDescription}> {status} </Text>
+                        </View>
 
-                <View className="postTextContainer" style={{flexDirection: 'row', marginLeft: 15}}>
-                    <Text style={styles.postLabel}> Status: </Text>
-                    <Text style={styles.postDescription}> {status} </Text>
-                </View>
-
-                <View className="postTextContainer" style={{flexDirection: 'row', marginLeft: 15}}>
-                    <Text style={styles.postLabel}> Price: </Text>
-                    <Text style={styles.postDescription}> {value} </Text>
+                        <View className="postTextContainer" style={{flexDirection: 'row', marginLeft: 15}}>
+                            <Text style={styles.postLabel}> Price: </Text>
+                            <Text style={styles.postDescription}> {value} </Text>
+                        </View>
+                    </View>
                 </View>
                 {/* COMMENTS DISPLAY IMPLEMENTATION */}
                 {commentLists.map((comment) => {
                     return (
                         <View style={styles.commentSection}>
-                            <View style={styles.singleComment}>
-                                <Text style={styles.commenter}> {comment.name}: </Text>
-                                <Text style={styles.commentText}> {comment.comment} </Text>
-                            </View>
                             <View>
-                                <Text style={styles.commentDate}> {comment.date} </Text>
+                                <View style={styles.singleComment}>
+                                    <Text style={styles.commenter}> {comment.name}: </Text>
+                                    <Text style={styles.commentText}> {comment.comment} </Text>
+                                </View>
+                                <View>
+                                    <Text style={styles.commentDate}> {comment.date} </Text>
+                                </View>
                             </View>
                         </View>
                     );
@@ -105,6 +111,7 @@ function Post({ name, id, title, postText, date, status, value, timestamp, image
                 )}
             </View>
         </View>
+        </View>
     );
 }
 
@@ -113,19 +120,19 @@ const styles = StyleSheet.create({
         margin: 30,
         flexDirection: 'row',
         flexWrap: 'wrap',
-        justifyContent: "center"
+        justifyContent: "center",
+        alignItems: "flex-start"
     },
 
     post: {
         flex: 1,
         width: 400,
-        height: "100%",
         margin: 30,
         borderColor: "gray",
         borderRadius: 5,
         borderWidth: 2,
         shadowColor: "#e5e5e5",
-        shadowRadius: 15
+        shadowRadius: 15,
     },
 
     button: {
@@ -155,11 +162,12 @@ const styles = StyleSheet.create({
     },
 
     postTextContainer: {
-        marginLeft: 15,
-        marginRight: 15,
+        marginLeft: 25,
+        marginRight: 25,
         marginBottom: 15,
         fontSize: 16,
-        height: 90
+        height: 90,
+        color: 'gray'
     },
 
     image: {
@@ -174,7 +182,7 @@ const styles = StyleSheet.create({
     postLabel: {
         fontSize: 14,
         color: 'gray',
-        fontWeight:800,
+        fontWeight: 750,
     },
 
     postDescription: {
@@ -184,9 +192,9 @@ const styles = StyleSheet.create({
 
     commentBox: {
         marginRight: 5,
-        width: 213,
+        width: 316,
         marginTop: 10,
-        marginLeft: 3,
+        marginLeft: 15,
         flexDirection: "column",
         alignSelf: "baseline",
     },
@@ -198,7 +206,7 @@ const styles = StyleSheet.create({
     commentSection: {
         borderRadius: 2,
         borderColor: "black",
-        margin: 7
+        margin: 2
     },
 
     singleComment: {
@@ -209,12 +217,14 @@ const styles = StyleSheet.create({
     commenter: {
     flex: 1,
     marginLeft: 15,
-    fontWeight: 600,
+    fontWeight: 620,
+    color: "dimgray"
     },
 
     commentText: {
-        flex: 2,
-        marginRight: 5
+        flex: 3,
+        marginRight: 5,
+        color: "dimgray"
     },
 
     commentDate: {
