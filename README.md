@@ -1,8 +1,5 @@
 
 # 🤝 UCLA BruinMarket 🤝 
-#### _CS35L Final Project_
-
-
 
 ## 📝 Documentation 📝
 
