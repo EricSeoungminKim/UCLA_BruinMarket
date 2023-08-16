@@ -1,5 +1,5 @@
 
-# 🤝 UCLA BruinMarket 🤝 
+# 🤝 UCLA Bruin Marketplace 🤝 
 
 ## 📝 Documentation 📝
 
